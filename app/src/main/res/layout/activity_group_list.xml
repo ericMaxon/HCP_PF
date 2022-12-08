@@ -44,7 +44,8 @@
             android:id="@+id/group_lvGrupos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"></ListView>
+            android:layout_marginHorizontal="15dp"
+            android:dividerHeight="10dp"></ListView>
 
     </RelativeLayout>
 
