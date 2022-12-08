@@ -1,11 +1,10 @@
-package com.example.pf_hpa4.request;
+package com.example.pf_hpa4.services.dto.responses.student;
 
 import com.google.gson.annotations.SerializedName;
 
-
 import java.util.Date;
 
-public class Estudiante {
+public class Student {
     Integer id;
     String nombre;
     String apellido;
@@ -14,9 +13,9 @@ public class Estudiante {
     @SerializedName("foto_url")
     String foto;
     @SerializedName("created_at")
-    Date created_at;
+    Date createdAt;
     @SerializedName("updated_at")
-    Date updated_at;
+    Date updatedAt;
 
     public Integer getId() {
         return id;
@@ -67,18 +66,18 @@ public class Estudiante {
     }
 
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
-        return updated_at;
+        return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
-        this.updated_at = updatedAt;
+        this.updatedAt = updatedAt;
     }
 }

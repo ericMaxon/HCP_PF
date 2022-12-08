@@ -1,8 +1,10 @@
-package com.example.pf_hpa4;
+package com.example.pf_hpa4.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.pf_hpa4.R;
 
 public class EstudiantesActivity extends AppCompatActivity {
 

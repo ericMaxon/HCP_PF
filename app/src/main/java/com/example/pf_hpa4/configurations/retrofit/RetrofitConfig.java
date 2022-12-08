@@ -1,32 +1,29 @@
-package com.example.pf_hpa4.services;
+package com.example.pf_hpa4.configurations.retrofit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.pf_hpa4.interfaces.IApi;
+import com.example.pf_hpa4.constants.ApiConstants;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiService extends AppCompatActivity {
-    private static IApi API_SERVICE;
-    private static final String BaseUrl = "https://asistencia-upn43.ondigitalocean.app/api/";
+public class RetrofitConfig {
+    private static Retrofit retrofitClient = null;
 
-    public static IApi getApiService(){
-        if (API_SERVICE == null){
+    public static Retrofit getInstance() {
+        if (retrofitClient == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor);
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BaseUrl)
+            retrofitClient = new Retrofit.Builder()
+                    .baseUrl(ApiConstants.BaseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
                     .build();
-            API_SERVICE = retrofit.create(IApi.class);
         }
-        return API_SERVICE;
-    }
 
+
+        return retrofitClient;
+    }
 }
