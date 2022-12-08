@@ -16,9 +16,9 @@
             android:id="@+id/txt_estudiante_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zona de estudiante"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
+            android:text="Listado de estudiantes"
             android:textSize="25dp"></TextView>
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_estudiante_titulo"
             android:layout_marginHorizontal="15dp"
-            android:text="En esta zona podras ver tu listado de asistencia"
+            android:text="Estudiantes de la asignatura"
             android:textSize="15dp"></TextView>
 
     </RelativeLayout>

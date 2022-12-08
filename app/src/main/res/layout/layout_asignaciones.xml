@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
 
     style="@style/listviewContent"
-    android:layout_marginVertical="5dp">
+    android:layout_marginVertical="10dp">
 
     <TextView
         android:id="@+id/txt_asignaciones_asignatura"
@@ -12,17 +12,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="5dp"
-        android:textSize="20dp"
-        android:text="[Codigo] - Asignatura"></TextView>
+        android:text="[Codigo] - Asignatura"
+        android:textSize="20dp"></TextView>
 
     <TextView
         android:id="@+id/txt_asignaciones_grupo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="15dp"
-        android:layout_marginBottom="5dp"
         android:layout_below="@+id/txt_asignaciones_asignatura"
-        android:text="Grupo"></TextView>
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Grupo"
+        android:textSize="15dp"></TextView>
+
+    <TextView
+        android:id="@+id/txt_asignaciones_semestre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_asignaciones_asignatura"
+        android:layout_alignParentRight="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Semestre"
+        android:textSize="15dp"></TextView>
 
 </RelativeLayout>
