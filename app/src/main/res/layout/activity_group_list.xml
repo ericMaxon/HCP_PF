@@ -39,6 +39,7 @@
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/rl_group_titular">
 
+
         <ListView
             android:id="@+id/group_lvGrupos"
             android:layout_width="match_parent"

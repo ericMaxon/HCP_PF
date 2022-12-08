@@ -51,6 +51,7 @@ public class GroupListActivity extends AppCompatActivity {
                         ((Grupos)a.getItemAtPosition(position)).getId();
 
                 idGrupo = opcionSeleccionada;
+
                 /////cambiar el layaout y llamar al retrofit dependiendo del tipo de usuario
             }
         });

@@ -37,6 +37,7 @@ public class ListViewAdapter_Grupos extends  ArrayAdapter<Grupos>{
         TextView lblSemestre = (TextView)item.findViewById(R.id.txt_asignaciones_semestre);
         lblSemestre.setText(opciones.get(position).getPeriodo());
 
+
         return(item);
     }
 

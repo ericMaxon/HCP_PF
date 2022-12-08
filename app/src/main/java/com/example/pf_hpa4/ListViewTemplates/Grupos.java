@@ -9,6 +9,7 @@ public class Grupos {
     private String grupo;
     private String periodo;
 
+
     public Grupos(int id_ , String asignatura_, String codigo_asignatura_, int docente_id_, String grupo_, String periodo_){
         id = id_;
         asignatura = asignatura_;
