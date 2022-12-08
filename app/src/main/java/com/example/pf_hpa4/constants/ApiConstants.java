@@ -8,11 +8,11 @@ public class ApiConstants {
 
         public static String presentName = "Presente";
         public static int lateId = 2;
-        public String lateName = "Tardanza";
+        public static String lateName = "Tardanza";
         public static int absentId = 3;
-        public String absentName = "Ausencia";
+        public static String absentName = "Ausencia";
         public static int excusedAbsenceId = 4;
-        public String excusedAbsenceName = "Ausencia con excusa";
+        public static String excusedAbsenceName = "Ausencia con excusa";
     }
     public static class Roles {
         public static Integer admin = 1;
