@@ -1,4 +1,4 @@
-package com.example.pf_hpa4.ListViewTemplates;
+package com.example.pf_hpa4.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.pf_hpa4.MainActivity;
 import com.example.pf_hpa4.R;
 
 import java.util.ArrayList;

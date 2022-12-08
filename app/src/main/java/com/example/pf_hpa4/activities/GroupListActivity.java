@@ -4,16 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.pf_hpa4.ListViewTemplates.Grupos;
-import com.example.pf_hpa4.ListViewTemplates.ListViewAdapter_Grupos;
+import com.example.pf_hpa4.Adapters.Grupos;
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Grupos;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.services.StudentGroupService;
 import com.example.pf_hpa4.services.dto.responses.student.Group;
@@ -89,6 +86,7 @@ public class GroupListActivity extends AppCompatActivity {
 
     private List<Grupos> GetElementsToListViewGrupos()
     {
+        //TODO: cambiar a la estructura del retrofit que esta en services -> dto -> responses -> student -> group
         List<Grupos> opciones = new ArrayList<Grupos>();
 
         opciones.add(new Grupos(1, "HPA 4", "324", 2, "1IL142", "II Semestre 2022"));
