@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Asistencia Electronica</string>
+
+    <string name="wait_write_dialog_title">Escribir datos en tag</string>
+    <string name="wait_write_dialog_text">Acerque el NFC tag</string>
+    <string name="tag_written_toast">Se ha escrito en el Tag correctamente</string>
+    <string name="cancel">Cancelar</string>
+
+    <string name="register">Crear Cuenta</string>
+    <string name="login_email_hint">Correo</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="signup_login_hint">Ya tiene una cuenta? Iniciar Sesion</string>
+    <string name="login_signup_hint">No tiene una cuenta? Registrese</string>
+
+</resources>
