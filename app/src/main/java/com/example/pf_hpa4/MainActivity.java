@@ -72,12 +72,11 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Tu usuario se encuentra inactivo", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                SharedPreferences teacher = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
-                                teacher.edit()
+                                SharedPreferences usuario = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
+                                usuario.edit()
                                         //TODO: agregar los keys
                                         .putInt("idUser", loginObj.getUsuario().getUserId())
                                         .putInt("role", loginObj.getUsuario().getRole())
-                                        .putInt("docente_id", loginObj.getUsuario().getTeacherId())
                                         .putString("nombres", loginObj.getUsuario().getName())
                                         .putString("apellidos", loginObj.getUsuario().getLastName())
                                         .putString("cedula", loginObj.getUsuario().getPersonalDocument())
@@ -92,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
                                     return;
 
                                 } else {
+                                    usuario = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
+                                    usuario.edit()
+                                            .putInt("docente_id", loginObj.getUsuario().getTeacherId())
+                                            .apply();
                                     startActivity(
                                             new Intent(MainActivity.this, GruposListActivity.class)
                                     );
