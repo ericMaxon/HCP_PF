@@ -9,6 +9,8 @@
     <color name="primaryTextColor">#fff</color>
     <color name="loginBkColor">#f0f0f0</color>
     <color name="imageBorderColor">#212F3D</color>
+    <color name="DarkBackground">#1C2833</color>
+
 
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>

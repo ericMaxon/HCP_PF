@@ -24,8 +24,8 @@ import java.util.List;
 public class AsistenciasListActivity extends AppCompatActivity {
 
     ListView Listado_Asistencias;
-    String idGrupo, idUser, Asignatura;
-    TextView txtAsignatura;
+    String idGrupo, idUser, Asignatura, Nombre, Cedula;
+    TextView txtAsignatura, txtTitulo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +43,21 @@ public class AsistenciasListActivity extends AppCompatActivity {
     private void Inicializar_controles(){
 
         Listado_Asistencias = (ListView)findViewById(R.id.asistencia_lvGrupos);
+
+        txtTitulo = (TextView)findViewById(R.id.txt_asistencia_titulo);
+        txtTitulo.setText(Nombre);
+
         txtAsignatura = (TextView)findViewById(R.id.txt_asistencia_subtitulo);
         txtAsignatura.setText(Asignatura);
         LoadListView_Asistencias();
     }
 
     private void RecibirDatos(Intent i) {
-        idUser = (i.getStringExtra("estudiante"));
-        idGrupo = (i.getStringExtra("grupo"));
+        idUser = (i.getStringExtra("id_estudiante"));
+        idGrupo = (i.getStringExtra("id_grupo"));
         Asignatura = (i.getStringExtra("asignatura"));
+        Nombre = (i.getStringExtra("nombre"));
+        Cedula = (i.getStringExtra("cedula"));
     }
 
     ////////////// Cargar ListView con las Asistencias

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.pf_hpa4.Adapters.Estudiantes;
 import com.example.pf_hpa4.Adapters.Grupos;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Grupos;
 import com.example.pf_hpa4.R;
@@ -74,19 +75,26 @@ public class GruposListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 int id_grupoSeleccionado = ((Grupos)a.getItemAtPosition(position)).getId();
                 String nombreGrupo = ((Grupos)a.getItemAtPosition(position)).getAsignatura();
+                String Grupo = ((Grupos)a.getItemAtPosition(position)).getGrupo();
 
                 idGrupo_Select = id_grupoSeleccionado;
 
                 if (role == 2){
 
-                    Intent i = new Intent(GruposListActivity.this, AsistenciasListActivity.class);
-                    i.putExtra("grupo", id_grupoSeleccionado);
-                    i.putExtra("estudiante", idUser);
+                    Intent i = new Intent(GruposListActivity.this, EstudiantesListActivity.class);
+                    i.putExtra("idgrupo", id_grupoSeleccionado);
+                    i.putExtra("grupo", Grupo);
                     i.putExtra("asignatura", nombreGrupo);
                     startActivity(i);
 
                 } else if (role == 3){
-
+                    Intent i = new Intent(GruposListActivity.this, AsistenciasListActivity.class);
+                    i.putExtra("_grupo", id_grupoSeleccionado);
+                    i.putExtra("_estudiante", idUser);
+                    i.putExtra("asignatura", "[" + Grupo + "] " + nombreGrupo);
+                    i.putExtra("nombre", (nombres + " " + apellidos));
+                    i.putExtra("cedula", cedula);
+                    startActivity(i);
                 }
             }
         });

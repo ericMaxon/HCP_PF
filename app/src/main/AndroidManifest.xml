@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.EstudiantesActivity"
+            android:name=".activities.EstudiantesListActivity"
             android:exported="false" />
         <activity
             android:name=".NFC.NFC_Actitvity"
