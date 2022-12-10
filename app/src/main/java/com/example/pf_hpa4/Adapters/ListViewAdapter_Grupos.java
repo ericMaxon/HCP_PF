@@ -1,4 +1,4 @@
-package com.example.pf_hpa4.ListViewTemplates;
+package com.example.pf_hpa4.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

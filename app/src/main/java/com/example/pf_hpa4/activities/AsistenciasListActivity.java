@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.pf_hpa4.ListViewTemplates.Asistencias;
-import com.example.pf_hpa4.ListViewTemplates.Grupos;
-import com.example.pf_hpa4.ListViewTemplates.ListViewAdapter_Asistencias;
+import com.example.pf_hpa4.Adapters.Asistencias;
+import com.example.pf_hpa4.Adapters.Grupos;
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Asistencias;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 

@@ -12,8 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.pf_hpa4.ListViewTemplates.Grupos;
-import com.example.pf_hpa4.ListViewTemplates.ListViewAdapter_Grupos;
+import com.example.pf_hpa4.Adapters.Grupos;
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Grupos;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.StudentGroupService;
