@@ -13,8 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pf_hpa4.activities.EstudiantesActivity;
-import com.example.pf_hpa4.activities.GroupListActivity;
+import com.example.pf_hpa4.activities.GruposListActivity;
 import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.AuthService;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Login> call, Response<Login> response) {
                                 if (!response.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "No se pudo obtener la informacion solicitada", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                                     call.cancel();
                                     return;
                                 }
@@ -73,32 +72,31 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Tu usuario se encuentra inactivo", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                SharedPreferences teacher = getSharedPreferences(SPreferencesKeys.teacher, Context.MODE_PRIVATE);
+                                SharedPreferences teacher = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
                                 teacher.edit()
                                         //TODO: agregar los keys
-                                        .putInt("userId", loginObj.getUsuario().getUserId())
-                                        .putInt("roleId", loginObj.getUsuario().getRole())
-                                        .putInt("teacherId", loginObj.getUsuario().getTeacherId())
-                                        .putString("name", loginObj.getUsuario().getName())
-                                        .putString("lastName", loginObj.getUsuario().getLastName())
-                                        .putString("personalDocument", loginObj.getUsuario().getPersonalDocument())
+                                        .putInt("idUser", loginObj.getUsuario().getUserId())
+                                        .putInt("role", loginObj.getUsuario().getRole())
+                                        .putInt("docente_id", loginObj.getUsuario().getTeacherId())
+                                        .putString("nombres", loginObj.getUsuario().getName())
+                                        .putString("apellidos", loginObj.getUsuario().getLastName())
+                                        .putString("cedula", loginObj.getUsuario().getPersonalDocument())
+                                        .putString("email", loginObj.getUsuario().getEmail())
+                                        .putInt("active", loginObj.getUsuario().getActive())
+                                        ///////Necesito el email_verified_at en el retrofit   .putInt("email_verified_at", loginObj.getUsuario().getEmail())
                                         .apply();
 
 
                                 if (Objects.equals(loginObj.getUsuario().getRole(), ApiConstants.Roles.admin)){
                                     Toast.makeText(MainActivity.this, "Falta implementar el admin > ", Toast.LENGTH_LONG).show();
                                     return;
-                                }
-                                if (Objects.equals(loginObj.getUsuario().getRole(), ApiConstants.Roles.teacher)) {
+
+                                } else {
                                     startActivity(
-                                            new Intent(MainActivity.this, GroupListActivity.class)
-                                                    .putExtra("teacherId", loginObj.getUsuario().getTeacherId())
+                                            new Intent(MainActivity.this, GruposListActivity.class)
                                     );
                                     return;
-                                }
-                                if (Objects.equals(loginObj.getUsuario().getRole(), ApiConstants.Roles.student)){
-                                    Toast.makeText(MainActivity.this, "Falta implementar el estudiante > ", Toast.LENGTH_LONG).show();
-                                    return;
+
                                 }
                             }
 
@@ -115,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_LONG).show();
         }
+        cirLoginButton.setEnabled(true);
     }
 
     public void register(View view) {

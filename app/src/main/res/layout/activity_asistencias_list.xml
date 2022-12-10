@@ -7,41 +7,41 @@
     tools:context=".activities.EstudiantesActivity">
 
     <RelativeLayout
-        android:id="@+id/rl_group_titular"
+        android:id="@+id/rl_asistencia_titular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp">
 
         <TextView
-            android:id="@+id/txt_group_titulo"
+            android:id="@+id/txt_asistencia_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
-            android:text="Listado de grupos"
+            android:text="Listado de Asistencia"
             android:textSize="25dp"></TextView>
 
         <TextView
-            android:id="@+id/txt_group_subtitulo"
+            android:id="@+id/txt_asistencia_subtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_group_titulo"
+            android:layout_below="@+id/txt_asistencia_titulo"
             android:layout_marginHorizontal="15dp"
-            android:text="En esta zona podras ver tus grupos"
+            android:text="Materia"
             android:textSize="15dp"></TextView>
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_group_contenido"
+        android:id="@+id/rl_asistencia_contenido"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
-        android:layout_below="@+id/rl_group_titular">
+        android:layout_below="@+id/rl_asistencia_titular">
 
 
         <ListView
-            android:id="@+id/group_lvGrupos"
+            android:id="@+id/asistencia_lvGrupos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"

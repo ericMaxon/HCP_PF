@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EstudiantesActivity">
+
+    <include
+        android:id="@+id/include_perfil_grupos"
+        layout="@layout/layout_perfil_usuario" />
+
+    <RelativeLayout
+        android:id="@+id/rl_group_titular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/include_perfil_grupos">
+
+        <TextView
+            android:id="@+id/txt_group_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Listado de grupos"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/txt_group_subtitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_group_titulo"
+            android:layout_marginHorizontal="15dp"
+            android:text="En esta zona podras ver tus grupos"
+            android:textSize="15dp"></TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_group_contenido"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/rl_group_titular">
+
+
+        <ListView
+            android:id="@+id/group_lvGrupos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:dividerHeight="10dp"></ListView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

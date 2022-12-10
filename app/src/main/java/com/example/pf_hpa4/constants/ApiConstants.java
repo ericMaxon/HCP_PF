@@ -16,7 +16,7 @@ public class ApiConstants {
     }
     public static class Roles {
         public static Integer admin = 1;
-        public static Integer teacher = 2;
-        public static Integer student = 3;
+        public static Integer profesor = 2;
+        public static Integer estudiante = 3;
     }
 }
