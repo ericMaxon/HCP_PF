@@ -19,7 +19,7 @@ public interface IStudentService {
     @GET("estudiantes/asistencia/{gaId}")
     Call<List<Attendance>> getStudentsAttendeByGroup(@Path("gaId") int gaId);
 
-    @GET("estudiantes/asistencia/{gaId}/{eId}")
+    @GET("estudiante/asistencia/{gaId}/{eId}")
     Call<List<Attendance>> getStudentsAttendeByGroup(@Path("gaId") int gaId, @Path("eId") int eId);
 
     @POST("estudiantes/asistencia")
