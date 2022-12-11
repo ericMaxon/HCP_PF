@@ -8,15 +8,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.pf_hpa4.R;
+import com.example.pf_hpa4.services.dto.responses.student.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListViewAdapter_Estudiantes  extends ArrayAdapter<Estudiantes> {
+public class ListViewAdapter_Students extends ArrayAdapter<Student> {
 
-    private List<Estudiantes> opciones = new ArrayList<>();
+    private List<Student> opciones;
 
-    public ListViewAdapter_Estudiantes(Context context, List<Estudiantes> datos) {
+    public ListViewAdapter_Students(Context context, List<Student> datos) {
         super(context, R.layout.activity_estudiantes_list, datos);
 
         opciones = datos;
@@ -27,13 +28,13 @@ public class ListViewAdapter_Estudiantes  extends ArrayAdapter<Estudiantes> {
         View item = inflater.inflate(R.layout.layout_listview_content, null);
 
         TextView lblTitulo = (TextView) item.findViewById(R.id.txt_listviewContent_titulo);
-        lblTitulo.setText((opciones.get(position).getNombre() + " " + opciones.get(position).getApellido()));
+        lblTitulo.setText((opciones.get(position).getName() + " " + opciones.get(position).getLastName()));
 
         TextView lblSubtitulo = (TextView) item.findViewById(R.id.txt_listviewContent_subTitulo);
-        lblSubtitulo.setText(opciones.get(position).getCorreo());
+        lblSubtitulo.setText(opciones.get(position).getEmail());
 
         TextView lblRightSubTitulo = (TextView) item.findViewById(R.id.txt_listviewContent_rigthSubTitulo);
-        lblRightSubTitulo.setText(opciones.get(position).getCedula());
+        lblRightSubTitulo.setText(opciones.get(position).getPersonalDocument());
 
         return (item);
     }

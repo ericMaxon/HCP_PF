@@ -5,7 +5,7 @@ import com.example.pf_hpa4.configurations.retrofit.RetrofitConfig;
 import java.lang.reflect.ParameterizedType;
 
 public abstract class AbstractService <T> {
-    private Class<? extends T> Tc;
+    private final Class<? extends T> Tc;
     private T API_SERVICE;
 
     @SuppressWarnings("unchecked")

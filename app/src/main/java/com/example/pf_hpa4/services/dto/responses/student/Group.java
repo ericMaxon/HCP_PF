@@ -1,8 +1,12 @@
 package com.example.pf_hpa4.services.dto.responses.student;
 
+import com.example.pf_hpa4.services.dto.responses.handler.IConvertFromJSON;
 import com.google.gson.annotations.SerializedName;
 
-public class Group {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Group implements IConvertFromJSON<Group> {
     @SerializedName("id")
     Integer groupId;
     @SerializedName("grupo")
@@ -15,6 +19,10 @@ public class Group {
     String semester;
     @SerializedName("docente_id")
     Integer teacherId;
+
+    public Group() {
+
+    }
 
     public Group(Integer groupId, String groupName, String subject, String subjectCode, String semester, Integer teacherId) {
         this.groupId = groupId;
@@ -83,5 +91,24 @@ public class Group {
                 ", \"semester\":'" + semester + '\'' +
                 ", \"teacherId\":" + teacherId +
                 '}';
+    }
+
+    public Group GetFromJSON(String json) {
+        JSONObject jsonHandler;
+        Group group = null;
+        try {
+            jsonHandler = new JSONObject(json);
+            group = new Group(
+                    jsonHandler.getInt("groupId"),
+                    jsonHandler.getString("groupName"),
+                    jsonHandler.getString("subject"),
+                    jsonHandler.getString("subjectCode"),
+                    jsonHandler.getString("semester"),
+                    jsonHandler.getInt("teacherId")
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return group;
     }
 }

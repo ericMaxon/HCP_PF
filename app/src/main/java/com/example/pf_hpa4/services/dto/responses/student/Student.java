@@ -1,8 +1,12 @@
 package com.example.pf_hpa4.services.dto.responses.student;
 
+import com.example.pf_hpa4.services.dto.responses.handler.IConvertFromJSON;
 import com.google.gson.annotations.SerializedName;
 
-public class Student {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Student implements IConvertFromJSON<Student> {
     @SerializedName("id")
     Integer studentId;
     @SerializedName("nombre")
@@ -15,6 +19,18 @@ public class Student {
     String email;
     @SerializedName("foto_url")
     String photo;
+
+    public Student(){
+
+    }
+    public Student(Integer studentId, String name, String lastName, String personalDocument, String email, String photo) {
+        this.studentId = studentId;
+        this.name = name;
+        this.lastName = lastName;
+        this.personalDocument = personalDocument;
+        this.email = email;
+        this.photo = photo;
+    }
 
     public Integer getStudentId() {
         return studentId;
@@ -67,12 +83,32 @@ public class Student {
     @Override
     public String toString() {
         return "{" +
-                "\"id\":" + studentId +
-                ", \"nombre\":'" + name + '\'' +
-                ", \"apellido\":'" + lastName + '\'' +
-                ", \"cedula\":'" + personalDocument + '\'' +
-                ", \"correo\":'" + email + '\'' +
-                ", \"foto\":'" + photo + '\'' +
+                "\"studentId\":" + studentId +
+                ", \"name\":'" + name + '\'' +
+                ", \"lastName\":'" + lastName + '\'' +
+                ", \"personalDocument\":'" + personalDocument + '\'' +
+                ", \"email\":'" + email + '\'' +
+                ", \"photo\":'" + photo + '\'' +
                 '}';
+    }
+
+    @Override
+    public Student GetFromJSON(String json) {
+        JSONObject jsonHandler;
+        Student student = null;
+        try {
+            jsonHandler = new JSONObject(json);
+            student = new Student(
+                    jsonHandler.getInt("studentId"),
+                    jsonHandler.getString("name"),
+                    jsonHandler.getString("lastName"),
+                    jsonHandler.getString("personalDocument"),
+                    jsonHandler.getString("email"),
+                    jsonHandler.getString("photo")
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return student;
     }
 }

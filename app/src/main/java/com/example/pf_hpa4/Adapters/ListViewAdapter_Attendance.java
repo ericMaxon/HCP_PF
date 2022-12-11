@@ -8,14 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.pf_hpa4.R;
+import com.example.pf_hpa4.constants.ApiConstants.AttendeeStatus;
+import com.example.pf_hpa4.services.dto.responses.student.Attendance;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class ListViewAdapter_Asistencias extends ArrayAdapter<Asistencias> {
-    private List<Asistencias> opciones = new ArrayList<>();
+public class ListViewAdapter_Attendance extends ArrayAdapter<Attendance> {
+    private List<Attendance> opciones = new ArrayList<>();
 
-    public ListViewAdapter_Asistencias(Context context, List<Asistencias> datos) {
+    public ListViewAdapter_Attendance(Context context, List<Attendance> datos) {
         super(context, R.layout.activity_asistencias_list, datos);
 
         opciones = datos;
@@ -26,25 +29,14 @@ public class ListViewAdapter_Asistencias extends ArrayAdapter<Asistencias> {
         View item = inflater.inflate(R.layout.layout_listview_content, null);
 
         TextView lblTitulo = (TextView) item.findViewById(R.id.txt_listviewContent_titulo);
-        lblTitulo.setText(opciones.get(position).getFecha());
+        lblTitulo.setText(opciones.get(position).getDate().toString());
 
         TextView lblSubtitulo = (TextView) item.findViewById(R.id.txt_listviewContent_subTitulo);
-        lblSubtitulo.setText(opciones.get(position).getHora());
+        lblSubtitulo.setText(opciones.get(position).getHour());
 
         TextView lblRightSubTitulo = (TextView) item.findViewById(R.id.txt_listviewContent_rigthSubTitulo);
 
-        if (opciones.get(position).getEstado_Asistencia() == 1){
-            lblRightSubTitulo.setText("Presente");
-        }
-        else if (opciones.get(position).getEstado_Asistencia() == 2){
-            lblRightSubTitulo.setText("Tardanza");
-        }
-        else if (opciones.get(position).getEstado_Asistencia() == 3){
-            lblRightSubTitulo.setText("Ausente");
-        }
-        else if (opciones.get(position).getEstado_Asistencia() == 4){
-            lblRightSubTitulo.setText("Ausente con excusa");
-        }
+        lblRightSubTitulo.setText(AttendeeStatus.getStatus(opciones.get(position).getSubjectStatusId()));
 
         return (item);
     }

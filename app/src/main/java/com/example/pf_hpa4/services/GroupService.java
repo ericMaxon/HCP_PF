@@ -1,13 +1,13 @@
 package com.example.pf_hpa4.services;
 
 import com.example.pf_hpa4.services.dto.responses.student.Group;
-import com.example.pf_hpa4.services.interfaces.IStudentGroupService;
+import com.example.pf_hpa4.services.interfaces.IGroupService;
 
 import java.util.List;
 
 import retrofit2.Call;
 
-public class StudentGroupService extends AbstractService<IStudentGroupService> implements IStudentGroupService {
+public class GroupService extends AbstractService<IGroupService> implements IGroupService {
 
     @Override
     public Call<List<Group>> getGroupsByStudentId(int id) {
