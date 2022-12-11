@@ -8,15 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.pf_hpa4.R;
+import com.example.pf_hpa4.services.dto.responses.student.Group;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ListViewAdapter_Grupos extends  ArrayAdapter<Grupos>{
+public class ListViewAdapter_Group extends  ArrayAdapter<Group>{
 
-    private List<Grupos> opciones = new ArrayList<>();
+    private List<Group> opciones;
 
-    public ListViewAdapter_Grupos(Context context, List<Grupos> datos){
+    public ListViewAdapter_Group(Context context, List<Group> datos){
         super(context, R.layout.activity_grupos_list, datos);
 
         opciones= datos;
@@ -27,13 +27,13 @@ public class ListViewAdapter_Grupos extends  ArrayAdapter<Grupos>{
         View item = inflater.inflate(R.layout.layout_listview_content, null);
 
         TextView lblTitulo = (TextView)item.findViewById(R.id.txt_listviewContent_titulo);
-        lblTitulo.setText("[" + opciones.get(position).getCodigoAsignatura() + "] " + opciones.get(position).getAsignatura());
+        lblTitulo.setText("[" + opciones.get(position).getSubjectCode() + "] " + opciones.get(position).getSubject());
 
         TextView lblSubTitulo = (TextView)item.findViewById(R.id.txt_listviewContent_subTitulo);
-        lblSubTitulo.setText(opciones.get(position).getGrupo());
+        lblSubTitulo.setText(opciones.get(position).getGroupName());
 
         TextView lblRightSubTitulo = (TextView)item.findViewById(R.id.txt_listviewContent_rigthSubTitulo);
-        lblRightSubTitulo.setText(opciones.get(position).getPeriodo());
+        lblRightSubTitulo.setText(opciones.get(position).getSemester());
 
 
         return(item);

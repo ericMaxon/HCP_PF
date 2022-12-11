@@ -2,21 +2,17 @@ package com.example.pf_hpa4.services.dto.responses.auth;
 
 import androidx.annotation.Nullable;
 
+import com.example.pf_hpa4.services.dto.responses.handler.IConvertFromJSON;
+import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
-    public User(
-            Integer userId, String name, String email, String personalDocument,
-            Integer role, Integer active, Integer teacherId, String lastName) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.personalDocument = personalDocument;
-        this.role = role;
-        this.active = active;
-        this.teacherId = teacherId;
-        this.lastName = lastName;
-    }
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class User implements IConvertFromJSON<User> {
 
     @SerializedName("id")
     Integer userId;
@@ -32,9 +28,29 @@ public class User {
     Integer role;
     @SerializedName("active")
     Integer active;
+    @SerializedName("email_verified_at")
+    @Nullable
+    Calendar emailVerifiedDate;
     @SerializedName("docente_id")
     @Nullable
     Integer teacherId;
+
+    public User() {
+    }
+
+    public User(
+            Integer userId, String name, String email, String personalDocument,
+            Integer role, Integer active, Integer teacherId, String lastName, Calendar emailVerifiedDate) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.personalDocument = personalDocument;
+        this.role = role;
+        this.active = active;
+        this.teacherId = teacherId;
+        this.lastName = lastName;
+        this.emailVerifiedDate = emailVerifiedDate;
+    }
 
     public String getLastName() {
         return lastName;
@@ -100,6 +116,15 @@ public class User {
         this.active = active;
     }
 
+    @Nullable
+    public Calendar getEmailVerifiedDate() {
+        return emailVerifiedDate;
+    }
+
+    public void setEmailVerifiedDate(@Nullable Calendar emailVerifiedDate) {
+        this.emailVerifiedDate = emailVerifiedDate;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -111,6 +136,31 @@ public class User {
                 ", \"role\":" + role +
                 ", \"active\":" + active +
                 ", \"teacherId\":" + teacherId +
+                ", \"emailVerifiedDate\": " + (emailVerifiedDate != null ? emailVerifiedDate.getTime().getTime() : null) +
                 '}';
+    }
+
+    @Override
+    public User GetFromJSON(String json) {
+        JSONObject jsonHandler;
+        User user = null;
+        try {
+            jsonHandler = new JSONObject(json);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(jsonHandler.getLong("teacherId")));
+            user = new User(
+                    jsonHandler.getInt("userId"),
+                    jsonHandler.getString("name"),
+                    jsonHandler.getString("email"),
+                    jsonHandler.getString("personalDocument"),
+                    jsonHandler.getInt("role"),
+                    jsonHandler.getInt("active"),
+                    jsonHandler.getInt("teacherId"),
+                    jsonHandler.getString("lastName"),
+                    cal);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

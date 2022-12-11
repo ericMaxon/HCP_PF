@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface IStudentGroupService {
+public interface IGroupService {
 
     @GET("grupos/estudiante/{eid}")
     Call<List<Group>> getGroupsByStudentId(@Path("eid") int id);

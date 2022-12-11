@@ -17,23 +17,23 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AsistenciasListActivity"
+            android:name=".Activities.AttendanceListActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.GruposListActivity"
+            android:name=".Activities.GroupListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.EstudiantesListActivity"
+            android:name=".Activities.StudentListActivity"
             android:exported="false" />
         <activity
             android:name=".NFC.NFC_Actitvity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
