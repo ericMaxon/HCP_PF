@@ -65,4 +65,16 @@ public class StudentAttendant {
     public void setSubjectStatusId(Integer subjectStatusId) {
         this.subjectStatusId = subjectStatusId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + id +
+                ", \"date\":" + date +
+                ", \"hour\":" + hour +
+                ", \"studentId\":" + studentId +
+                ", \"groupSubjectId\":" + groupSubjectId +
+                ", \"subjectStatusId\":" + subjectStatusId +
+                '}';
+    }
 }

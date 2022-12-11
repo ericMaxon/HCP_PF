@@ -72,4 +72,16 @@ public class Group {
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"groupId\":" + groupId +
+                ", \"groupName\":'" + groupName + '\'' +
+                ", \"subject\":'" + subject + '\'' +
+                ", \"subjectCode\":'" + subjectCode + '\'' +
+                ", \"semester\":'" + semester + '\'' +
+                ", \"teacherId\":" + teacherId +
+                '}';
+    }
 }
