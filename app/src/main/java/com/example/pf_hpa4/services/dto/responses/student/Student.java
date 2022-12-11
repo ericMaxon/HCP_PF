@@ -2,82 +2,77 @@ package com.example.pf_hpa4.services.dto.responses.student;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 public class Student {
-    Integer id;
-    String nombre;
-    String apellido;
-    String cedula;
-    String correo;
+    @SerializedName("id")
+    Integer studentId;
+    @SerializedName("nombre")
+    String name;
+    @SerializedName("apellido")
+    String lastName;
+    @SerializedName("cedula")
+    String personalDocument;
+    @SerializedName("correo")
+    String email;
     @SerializedName("foto_url")
-    String foto;
-    @SerializedName("created_at")
-    Date createdAt;
-    @SerializedName("updated_at")
-    Date updatedAt;
+    String photo;
 
-    public Integer getId() {
-        return id;
+    public Integer getStudentId() {
+        return studentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getCedula() {
-        return cedula;
+    public String getPersonalDocument() {
+        return personalDocument;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setPersonalDocument(String personalDocument) {
+        this.personalDocument = personalDocument;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + studentId +
+                ", \"nombre\":'" + name + '\'' +
+                ", \"apellido\":'" + lastName + '\'' +
+                ", \"cedula\":'" + personalDocument + '\'' +
+                ", \"correo\":'" + email + '\'' +
+                ", \"foto\":'" + photo + '\'' +
+                '}';
     }
 }

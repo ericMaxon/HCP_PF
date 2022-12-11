@@ -1,5 +1,7 @@
 package com.example.pf_hpa4.services.dto.responses.auth;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 public class User {
@@ -31,6 +33,7 @@ public class User {
     @SerializedName("active")
     Integer active;
     @SerializedName("docente_id")
+    @Nullable
     Integer teacherId;
 
     public String getLastName() {
@@ -95,5 +98,19 @@ public class User {
 
     public void setActive(Integer active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"userId\":" + userId +
+                ", \"name\":'" + name + '\'' +
+                ", \"lastName\":'" + lastName + '\'' +
+                ", \"email\":'" + email + '\'' +
+                ", \"personalDocument\":'" + personalDocument + '\'' +
+                ", \"role\":" + role +
+                ", \"active\":" + active +
+                ", \"teacherId\":" + teacherId +
+                '}';
     }
 }
