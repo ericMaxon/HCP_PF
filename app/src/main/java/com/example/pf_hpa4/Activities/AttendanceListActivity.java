@@ -54,7 +54,7 @@ public class AttendanceListActivity extends AppCompatActivity {
         Inicializar_controles();
         progressDialog.setMessage("Obteniendo el listado de las asistencias");
         progressDialog.show();
-        studentService.getStudentsAttendeByGroup(1, selectedStudent.getStudentId())
+        studentService.getStudentsAttendeByGroup(selectedGroup.getGroupId(), selectedStudent.getStudentId())
                 .enqueue(new Callback<List<Attendance>>() {
                     @Override
                     public void onResponse(Call<List<Attendance>> call, Response<List<Attendance>> response) {
