@@ -48,8 +48,8 @@ public class GroupListActivity extends AppCompatActivity {
         user = user.GetFromJSON(userSP_JSON.getString("jsonUser", ""));
         Call<List<Group>> service =
                 Objects.equals(user.getRole(), Role.teacher) && user.getTeacherId() != null
-                        ? groupService.getGroupsByProfesorId(1)
-                        : groupService.getGroupsByStudentId(1);
+                        ? groupService.getGroupsByProfesorId(user.getTeacherId())
+                        : groupService.getGroupsByStudentId(user.getUserId());
 
         Inicializar_controles();
         progressDialog.setMessage("Obteniendo listado de grupos...");
