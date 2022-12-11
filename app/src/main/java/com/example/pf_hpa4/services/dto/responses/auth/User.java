@@ -30,7 +30,7 @@ public class User implements IConvertFromJSON<User> {
     Integer active;
     @SerializedName("email_verified_at")
     @Nullable
-    Calendar emailVerifiedDate;
+    String emailVerifiedDate;
     @SerializedName("docente_id")
     @Nullable
     Integer teacherId;
@@ -40,7 +40,7 @@ public class User implements IConvertFromJSON<User> {
 
     public User(
             Integer userId, String name, String email, String personalDocument,
-            Integer role, Integer active, Integer teacherId, String lastName, Calendar emailVerifiedDate) {
+            Integer role, Integer active, Integer teacherId, String lastName, String emailVerifiedDate) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -117,11 +117,11 @@ public class User implements IConvertFromJSON<User> {
     }
 
     @Nullable
-    public Calendar getEmailVerifiedDate() {
+    public String getEmailVerifiedDate() {
         return emailVerifiedDate;
     }
 
-    public void setEmailVerifiedDate(@Nullable Calendar emailVerifiedDate) {
+    public void setEmailVerifiedDate(@Nullable String emailVerifiedDate) {
         this.emailVerifiedDate = emailVerifiedDate;
     }
 
@@ -136,7 +136,7 @@ public class User implements IConvertFromJSON<User> {
                 ", \"role\":" + role +
                 ", \"active\":" + active +
                 ", \"teacherId\":" + teacherId +
-                ", \"emailVerifiedDate\": " + (emailVerifiedDate != null ? emailVerifiedDate.getTime().getTime() : null) +
+                ", \"emailVerifiedDate\": " + (emailVerifiedDate != null ? "\"" + emailVerifiedDate + "\"" : null) +
                 '}';
     }
 
@@ -146,8 +146,6 @@ public class User implements IConvertFromJSON<User> {
         User user = null;
         try {
             jsonHandler = new JSONObject(json);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(jsonHandler.getLong("teacherId")));
             user = new User(
                     jsonHandler.getInt("userId"),
                     jsonHandler.getString("name"),
@@ -157,7 +155,7 @@ public class User implements IConvertFromJSON<User> {
                     jsonHandler.getInt("active"),
                     jsonHandler.getInt("teacherId"),
                     jsonHandler.getString("lastName"),
-                    cal);
+                    jsonHandler.getString("emailVerifiedDate"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
