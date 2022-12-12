@@ -1,5 +1,7 @@
 package com.example.pf_hpa4.constants;
 
+import java.time.LocalDateTime;
+
 public class ApiConstants {
     public static final String BaseUrl = "https://asistencia-upn43.ondigitalocean.app/api/";
 
@@ -23,6 +25,10 @@ public class ApiConstants {
                 default:
                     return "No se ha definido el estado de la asistencia";
             }
+        }
+        public static Integer getStatusId(LocalDateTime time){
+            //todo: agregar logica de tardanzas
+            return 1;
         }
     }
     public static class Role {

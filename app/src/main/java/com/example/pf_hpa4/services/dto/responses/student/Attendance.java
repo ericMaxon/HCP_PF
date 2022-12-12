@@ -1,5 +1,7 @@
 package com.example.pf_hpa4.services.dto.responses.student;
 
+import androidx.annotation.Nullable;
+
 import com.example.pf_hpa4.services.dto.responses.handler.IConvertFromJSON;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,6 +13,7 @@ import java.util.Date;
 
 public class Attendance implements IConvertFromJSON<Attendance> {
     @SerializedName("id")
+    @Nullable
     Integer attendanceId;
     @SerializedName("fecha")
     String date;
@@ -26,7 +29,7 @@ public class Attendance implements IConvertFromJSON<Attendance> {
     public Attendance() {
     }
 
-    public Attendance(Integer attendanceId, String date, String hour, Integer studentId, Integer groupSubjectId,
+    public Attendance(@Nullable Integer attendanceId, String date, String hour, Integer studentId, Integer groupSubjectId,
                       Integer subjectStatusId) {
         this.attendanceId = attendanceId;
         this.date = date;
