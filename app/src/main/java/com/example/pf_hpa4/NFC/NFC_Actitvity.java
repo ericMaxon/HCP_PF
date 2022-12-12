@@ -47,10 +47,12 @@ public class NFC_Actitvity extends AppCompatActivity {
 
                 String text = "Bryan Campos";
                 String text2 = "8-957-1721";
+                String text3 = "1";
                 String encodedText = Base64.getEncoder().encodeToString(text.getBytes());
                 String encodedText2 = Base64.getEncoder().encodeToString(text2.getBytes());
+                String encodedText3 = Base64.getEncoder().encodeToString(text3.getBytes());
 
-                writeHelper.writeText(encodedText, encodedText2);
+                writeHelper.writeText(encodedText, encodedText2, encodedText3);
             }
         });
     }

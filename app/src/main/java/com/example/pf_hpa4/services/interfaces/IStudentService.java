@@ -22,6 +22,6 @@ public interface IStudentService {
     @GET("estudiante/asistencia/{gaId}/{eId}")
     Call<List<Attendance>> getStudentsAttendeByGroup(@Path("gaId") int gaId, @Path("eId") int eId);
 
-    @POST("estudiantes/asistencia")
+    @POST("estudiante/asistencia")
     Call<Integer> postStudentsSubject(@Body Attendance body);
 }

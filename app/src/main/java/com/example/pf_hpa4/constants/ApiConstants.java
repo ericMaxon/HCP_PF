@@ -1,5 +1,9 @@
 package com.example.pf_hpa4.constants;
 
+import android.widget.Toast;
+
+import com.example.pf_hpa4.Activities.PassListActivity;
+
 import java.time.LocalDateTime;
 
 public class ApiConstants {
@@ -26,9 +30,18 @@ public class ApiConstants {
                     return "No se ha definido el estado de la asistencia";
             }
         }
-        public static Integer getStatusId(LocalDateTime time){
+        public static Integer getStatusId(LocalDateTime time, LocalDateTime Starttime){
             //todo: agregar logica de tardanzas
-            return 1;
+
+            int minutes = time.getMinute() - Starttime.getMinute();
+            int hours = time.getHour() - Starttime.getHour();
+
+            if ((hours < 1) && (minutes < 3) ) {
+                return EAttendeeStatus.presentId;
+            } else {
+                return EAttendeeStatus.lateId;
+            }
+
         }
     }
     public static class Role {

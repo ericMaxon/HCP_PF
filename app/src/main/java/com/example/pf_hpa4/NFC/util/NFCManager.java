@@ -35,6 +35,7 @@ public class NFCManager {
 
 	String writeText = null;
 	String writeText2 = null;
+	String writeText3 = null;
 
 	
 	public NFCManager(Activity activity) {
@@ -71,6 +72,9 @@ public class NFCManager {
 	public void writeText2(String writeText2) {
 		this.writeText2 = writeText2;
 	}
+	public void writeText3(String writeText3) {
+		this.writeText2 = writeText3;
+	}
 
 	/**
 	 * Stops a writeText operation
@@ -80,6 +84,9 @@ public class NFCManager {
 	}
 	public void undoWriteText2() {
 		this.writeText2 = null;
+	}
+	public void undoWriteText3() {
+		this.writeText3 = null;
 	}
 
 	
@@ -122,18 +129,19 @@ public class NFCManager {
 	public void onActivityNewIntent(Intent intent) {
 		// TODO Check if the following line has any use 
 		// activity.setIntent(intent);
-		if (writeText == null && writeText2 == null)
+		if (writeText == null && writeText2 == null && writeText3 == null)
 			readTagFromIntent(intent);
 		else {
 			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			try {
-				writeTag(activity, tag, writeText, writeText2);
+				writeTag(activity, tag, writeText, writeText2, writeText3);
 				onTagWriteListener.onTagWritten();
 			} catch (NFCWriteException exception) {
 				onTagWriteErrorListener.onTagWriteError(exception);
 			} finally {
 				writeText = null;
 				writeText2 = null;
+				writeText3 = null;
 			}
 		}
 	}
@@ -149,7 +157,7 @@ public class NFCManager {
 			Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 			if (rawMsgs != null) {
 				NdefRecord[] records = ((NdefMessage) rawMsgs[0]).getRecords();
-				String[] text = new String[2];
+				String[] text = new String[3];
 				//text[0] = ndefRecordToString(records[0]).substring(3);
 				//text[1] = ndefRecordToString(records[1]).substring(3);
 
@@ -157,9 +165,12 @@ public class NFCManager {
 				String decodedString = new String(decodedBytes);
 				byte[] decodedBytes2 = Base64.getDecoder().decode(ndefRecordToString(records[1]));
 				String decodedString2 = new String(decodedBytes2);
+				byte[] decodedBytes3 = Base64.getDecoder().decode(ndefRecordToString(records[2]));
+				String decodedString3 = new String(decodedBytes3);
 
 				text[0] = decodedString;
 				text[1] = decodedString2;
+				text[2] = decodedString3;
 
 				onTagReadListener.onTagRead(text);
 			}
@@ -178,14 +189,15 @@ public class NFCManager {
 	 * @param data
 	 * @throws NFCWriteException
 	 */
-	protected void writeTag(Context context, Tag tag, String data, String data2) throws NFCWriteException {
+	protected void writeTag(Context context, Tag tag, String data, String data2, String data3) throws NFCWriteException {
 		// Record with actual data we care about
 		NdefRecord relayRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, null, data.getBytes());
 		NdefRecord relayRecord2 = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, null, data2.getBytes());
+		NdefRecord relayRecord3 = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, null, data3.getBytes());
 
 
 		// Complete NDEF message with both records
-		NdefMessage message = new NdefMessage(new NdefRecord[] { relayRecord,  relayRecord2});
+		NdefMessage message = new NdefMessage(new NdefRecord[] { relayRecord,  relayRecord2, relayRecord3});
 
 		Ndef ndef = Ndef.get(tag);
 		if (ndef != null) {

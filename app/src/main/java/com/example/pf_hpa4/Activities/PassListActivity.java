@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.NFC.NFC_Actitvity;
 import com.example.pf_hpa4.NFC.util.NFCManager;
@@ -31,6 +33,7 @@ import com.example.pf_hpa4.services.dto.responses.student.Student;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,8 +53,10 @@ public class PassListActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    ListViewAdapter_Students adapter_temp;
+    ListViewAdapter_PassList adapter_temp;
     List<Student> studentList_temp;
+
+    LocalDateTime Starttime = LocalDateTime.now();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class PassListActivity extends AppCompatActivity {
         }
         InitControllers();
 
-        progressDialog.setMessage("Obteniendo el listado de estudiantes");
+        progressDialog.setMessage("Obteniendo el listado de estudiantes...");
         progressDialog.show();
 
         nfcManager = new NFCManager(this);
@@ -130,7 +135,7 @@ public class PassListActivity extends AppCompatActivity {
     }
 
     private void LoadListView_Students(List<Student> studentList) {
-        ListViewAdapter_Students adapter = new ListViewAdapter_Students(this, studentList);
+        ListViewAdapter_PassList adapter = new ListViewAdapter_PassList(this, studentList);
         Listado_Estudiantes.setAdapter(adapter);
         adapter_temp = adapter;
         Listado_Estudiantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,7 +150,7 @@ public class PassListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         studentList_temp.remove(position);
                         adapter_temp.notifyDataSetChanged();
-                        cargar_asistencia(sStudent.getStudentId());
+                        cargar_asistencia(sStudent.getStudentId(), (sStudent.getName() + " " + sStudent.getLastName()), sStudent.getPersonalDocument());
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -170,11 +175,10 @@ public class PassListActivity extends AppCompatActivity {
                 for (int i = 0; i < studentList_temp.size(); i++){
                     String check = (studentList_temp.get(i).getStudentId()).toString();
                     if (check.equals(idUser)){
-                        Toast.makeText(PassListActivity.this, nombre + " | " + cedula, Toast.LENGTH_LONG).show();
                         studentList_temp.remove(i);
                         adapter_temp.notifyDataSetChanged();
                         verified = true;
-                        cargar_asistencia(Integer.parseInt(idUser));
+                        cargar_asistencia(Integer.parseInt(idUser), nombre, cedula);
                     }
                 }
                 if (!verified) {
@@ -184,26 +188,39 @@ public class PassListActivity extends AppCompatActivity {
         });
 
     }
-    private void cargar_asistencia(Integer idUser){
+    private void cargar_asistencia(Integer idUser, String name, String ced){
+        progressDialog.setMessage("Marcando asistencia...");
+        progressDialog.show();
+
         Date currentDate = new Date();
+        int Asis = ApiConstants.AttendeeStatus.getStatusId(LocalDateTime.now(), Starttime);
+
         Attendance payload = new Attendance(
                 null,//No es un campo necesario
                 DateFormat.getDateInstance(DateFormat.SHORT, new Locale("es-ES")).format(currentDate),//Da el formato YYYY-MM-DD
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(currentDate),//Da el formato HH:MM A
                 idUser,
                 selectedGroup.getGroupId(),
-                ApiConstants.AttendeeStatus.getStatusId(LocalDateTime.now())
+                Asis
         );
         studentService.postStudentsSubject(payload)
                 .enqueue(new Callback<Integer>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        //TODO: agregar mensaje de respuesta
+                        progressDialog.dismiss();
+                        String Asis_T;
+                        if (Asis == ApiConstants.EAttendeeStatus.presentId) {
+                            Asis_T = "Presente";
+                        } else{
+                            Asis_T = "Tardanza";
+                        }
+                        Toast.makeText(PassListActivity.this, "Se registro como " + Asis_T + " para:  " + name + " | " + ced, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onFailure(Call<Integer> call, Throwable t) {
-                        //TODO: agregar mensaje de error
+                        progressDialog.dismiss();
+                        Toast.makeText(PassListActivity.this, "No pudimos registrar la asistencia", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -217,18 +234,42 @@ public class PassListActivity extends AppCompatActivity {
         dialogo1.setMessage("Al cerrar el listado todos los estudiantes que no se registraron seran marcados con ausencia. ¿Desea continuar?");
         dialogo1.setCancelable(false);
         dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+
+            Date currentDate = new Date();
+
             public void onClick(DialogInterface dialogo1, int id) {
                 for (int i = 0; i < studentList_temp.size(); i++){
                     String idStudent = (studentList_temp.get(i).getStudentId()).toString();
 
+                    int posActual = i;
 
+                    Attendance payload = new Attendance(
+                            null,//No es un campo necesario
+                            DateFormat.getDateInstance(DateFormat.SHORT, new Locale("es-ES")).format(currentDate),//Da el formato YYYY-MM-DD
+                            DateFormat.getTimeInstance(DateFormat.SHORT).format(currentDate),//Da el formato HH:MM A
+                            Integer.parseInt(idStudent),
+                            selectedGroup.getGroupId(),
+                            ApiConstants.EAttendeeStatus.absentId
+                    );
+                    studentService.postStudentsSubject(payload)
+                            .enqueue(new Callback<Integer>() {
+                                @Override
+                                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                    //////No se requiere ninguna accion
+                                }
 
-                    ////////// estudiante/asistencia enviar la asistencia con la marca AUSENTE para cada idStudent
+                                @Override
+                                public void onFailure(Call<Integer> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(PassListActivity.this, "No pudimos registrar la asistencia", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
 
 
                 }
-
+                progressDialog.dismiss();
+                Toast.makeText(PassListActivity.this, "Asistencia finalizada", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(PassListActivity.this, StudentListActivity.class)
                         .putExtra("json_SelectedGroup", selectedGroup.toString());
                 startActivity(i);

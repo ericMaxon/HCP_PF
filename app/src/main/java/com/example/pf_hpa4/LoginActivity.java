@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pf_hpa4.Activities.AdminActivity;
 import com.example.pf_hpa4.Activities.GroupListActivity;
 import com.example.pf_hpa4.constants.ApiConstants.Role;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
@@ -84,12 +85,16 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Tu usuario se encuentra inactivo", Toast.LENGTH_SHORT).show();
                                 return;
                             }
+
                             SharedPreferences usuario = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
                             usuario.edit()
                                     .putString("jsonUser", loginObj.getUsuario().toString())
                                     .apply();
+
                             if (Objects.equals(loginObj.getUsuario().getRole(), Role.admin)) {
-                                Toast.makeText(LoginActivity.this, "Falta implementar el admin > ", Toast.LENGTH_LONG).show();
+                                startActivity(
+                                        new Intent(LoginActivity.this, AdminActivity.class)
+                                );
                             } else {
                                 startActivity(
                                         new Intent(LoginActivity.this, GroupListActivity.class)

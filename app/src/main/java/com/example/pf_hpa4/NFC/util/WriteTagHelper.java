@@ -29,11 +29,12 @@ public class WriteTagHelper implements NFCManager.TagWriteErrorListener, NFCMana
 	 * Write the given text to a tag.
 	 * @param text
 	 */
-	public void writeText(String text, String text2){
+	public void writeText(String text, String text2, String text3){
 		dialog = createWaitingDialog();
 		dialog.show();
 		nfcManager.writeText(text);
 		nfcManager.writeText2(text2);
+		nfcManager.writeText3(text3);
 
 	}
 	
@@ -70,6 +71,7 @@ public class WriteTagHelper implements NFCManager.TagWriteErrorListener, NFCMana
            public void onClick(DialogInterface dialog, int id) {
         	   nfcManager.undoWriteText();
 			   nfcManager.undoWriteText2();
+			   nfcManager.undoWriteText3();
 		   }
        });
 		return builder.create();
