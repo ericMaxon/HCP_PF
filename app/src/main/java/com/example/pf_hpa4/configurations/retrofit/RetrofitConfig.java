@@ -18,7 +18,6 @@ public class RetrofitConfig {
                     .addInterceptor(loggingInterceptor);
             retrofitClient = new Retrofit.Builder()
                     .baseUrl(ApiConstants.BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.excludeFieldsWithoutExposeAnnotation().create())
                     .client(httpClient.build())
                     .build();
         }
