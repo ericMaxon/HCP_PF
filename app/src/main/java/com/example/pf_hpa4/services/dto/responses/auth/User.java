@@ -32,8 +32,6 @@ public class User implements IConvertFromJSON<User> {
     @Nullable
     String emailVerifiedDate;
     @SerializedName("docente_id")
-    @Expose(serialize = false)
-    @Expose(deserialize = false)
     Integer teacherId;
 
     public User() {
