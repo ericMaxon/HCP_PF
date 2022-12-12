@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.R;
@@ -26,12 +29,12 @@ import retrofit2.Response;
 public class StudentListActivity extends AppCompatActivity {
 
     ListView Listado_Estudiantes;
-    TextView txtAsignatura;
 
     Group selectedGroup = new Group();
     StudentService studentService = new StudentService();
 
     ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +81,8 @@ public class StudentListActivity extends AppCompatActivity {
     private void InitControllers() {
         progressDialog = new ProgressDialog(this);
         Listado_Estudiantes = (ListView) findViewById(R.id.estudiantes_lvGrupos);
-        txtAsignatura = (TextView) findViewById(R.id.txt_estudiante_titulo);
-        txtAsignatura.setText("[" + selectedGroup.getGroupName() + "] " + selectedGroup.getSubject());
+        Toolbar txtAsignatura = (Toolbar) findViewById(R.id.tlb_estudiante_titulo);
+        txtAsignatura.setTitle("[" + selectedGroup.getGroupName() + "] " + selectedGroup.getSubject());
 
         Listado_Estudiantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -90,6 +93,21 @@ public class StudentListActivity extends AppCompatActivity {
                 i.putExtra("json_SelectedGroup", selectedGroup.toString());//TODO: evaluate if you could change to sharePreference
 
                 startActivity(i);
+            }
+        });
+
+
+        txtAsignatura.inflateMenu(R.menu.menu);
+        txtAsignatura.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ///////////// Enviar id del grupo al activity pasar lista
+                if (item.getItemId() == R.id.menu_pasar_asistencia) {
+                    Intent i = new Intent(StudentListActivity.this, PassListActivity.class);
+                    i.putExtra("json_SelectedGroup", selectedGroup.toString());
+                    startActivity(i);
+                }
+                return false;
             }
         });
 

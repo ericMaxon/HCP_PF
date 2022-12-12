@@ -32,7 +32,7 @@ public class AttendanceListActivity extends AppCompatActivity {
 
     ListView Listado_Asistencias;
 
-    TextView txtAsignatura, txtTitulo;
+    TextView txtSubtitulo, txtTitulo, txtCedula;
 
     Group selectedGroup = new Group();
     Student selectedStudent = new Student();
@@ -88,10 +88,13 @@ public class AttendanceListActivity extends AppCompatActivity {
         Listado_Asistencias = findViewById(R.id.asistencia_lvGrupos);
 
         txtTitulo = findViewById(R.id.txt_asistencia_titulo);
-        txtTitulo.setText(selectedStudent.getName());
+        txtTitulo.setText(selectedStudent.getName() + " " + selectedStudent.getLastName());
 
-        txtAsignatura = findViewById(R.id.txt_asistencia_subtitulo);
-        txtAsignatura.setText(selectedGroup.getSubject());
+        txtCedula = findViewById(R.id.txt_asistencia_cedula);
+        txtCedula.setText(selectedStudent.getPersonalDocument());
+
+        txtSubtitulo = findViewById(R.id.txt_asistencia_subtitulo);
+        txtSubtitulo.setText(selectedGroup.getSubject());
     }
 
     private void MapInfoFromIntent(Intent i) {
