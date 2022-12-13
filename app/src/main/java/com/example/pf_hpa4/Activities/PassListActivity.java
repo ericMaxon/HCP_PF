@@ -4,26 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.strictmode.SqliteObjectLeakedViolation;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
-import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
-import com.example.pf_hpa4.NFC.NFC_Actitvity;
-import com.example.pf_hpa4.NFC.util.NFCManager;
-import com.example.pf_hpa4.NFC.util.WriteTagHelper;
+import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.services.StudentService;
@@ -33,8 +24,6 @@ import com.example.pf_hpa4.services.dto.responses.student.Student;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -169,7 +158,7 @@ public class PassListActivity extends AppCompatActivity {
             public void onTagRead(String[] tagRead) {
                 String nombre = tagRead[0];
                 String cedula = tagRead[1];
-                String idUser = tagRead[3];
+                String idUser = tagRead[2];
 
                 Boolean verified = false;
                 for (int i = 0; i < studentList_temp.size(); i++){

@@ -1,4 +1,4 @@
-package com.example.pf_hpa4.NFC.util;
+package com.example.pf_hpa4.NFC;
 
 
 import android.app.AlertDialog;

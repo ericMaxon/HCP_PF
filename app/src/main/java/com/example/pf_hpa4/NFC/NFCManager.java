@@ -1,4 +1,4 @@
-package com.example.pf_hpa4.NFC.util;
+package com.example.pf_hpa4.NFC;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -73,7 +73,7 @@ public class NFCManager {
 		this.writeText2 = writeText2;
 	}
 	public void writeText3(String writeText3) {
-		this.writeText2 = writeText3;
+		this.writeText3 = writeText3;
 	}
 
 	/**

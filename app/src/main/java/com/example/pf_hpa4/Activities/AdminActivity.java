@@ -9,27 +9,24 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
+import com.example.pf_hpa4.NFC.NFCManager;
+import com.example.pf_hpa4.NFC.WriteTagHelper;
 import com.example.pf_hpa4.R;
-import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.StudentService;
 import com.example.pf_hpa4.services.dto.responses.auth.User;
-import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.example.pf_hpa4.services.dto.responses.student.Student;
 
+import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -43,6 +40,9 @@ public class AdminActivity extends AppCompatActivity {
     EditText busqueda;
     ListView estudiantes;
 
+    WriteTagHelper writeHelper;
+    NFCManager nfcManager;
+
     User user = new User();
     StudentService studentService = new StudentService();
     ListViewAdapter_Students adapter;
@@ -53,6 +53,13 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
+        nfcManager = new NFCManager(this);
+        nfcManager.onActivityCreate();
+
+        writeHelper= new WriteTagHelper(AdminActivity.this, nfcManager);
+        nfcManager.setOnTagWriteErrorListener(writeHelper);
+        nfcManager.setOnTagWriteListener(writeHelper);
 
         SharedPreferences userSP_JSON = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
         user = user.GetFromJSON(userSP_JSON.getString("jsonUser", ""));
@@ -124,10 +131,35 @@ public class AdminActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Student sStudent = ((Student) a.getItemAtPosition(position));
 
+                String text = sStudent.getName() + " " + sStudent.getLastName();
+                String text2 = sStudent.getPersonalDocument();
+                String text3 = (sStudent.getStudentId()).toString();
+                String encodedText = Base64.getEncoder().encodeToString(text.getBytes());
+                String encodedText2 = Base64.getEncoder().encodeToString(text2.getBytes());
+                String encodedText3 = Base64.getEncoder().encodeToString(text3.getBytes());
 
+                writeHelper.writeText(encodedText, encodedText2, encodedText3);
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        nfcManager.onActivityResume();
+    }
+
+    @Override
+    protected void onPause() {
+        nfcManager.onActivityPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        nfcManager.onActivityNewIntent(intent);
     }
 
 }
