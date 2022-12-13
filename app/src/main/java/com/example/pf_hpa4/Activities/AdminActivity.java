@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.NFC.WriteTagHelper;
@@ -45,7 +46,7 @@ public class AdminActivity extends AppCompatActivity {
 
     User user = new User();
     StudentService studentService = new StudentService();
-    ListViewAdapter_Students adapter;
+    ListViewAdapter_PassList adapter;
 
     ProgressDialog progressDialog;
 
@@ -84,7 +85,7 @@ public class AdminActivity extends AppCompatActivity {
                             call.cancel();
                             return;
                         }
-                        adapter = new ListViewAdapter_Students(AdminActivity.this, studentList);
+                        adapter = new ListViewAdapter_PassList(AdminActivity.this, studentList);
                         estudiantes.setAdapter(adapter);
                     }
 
