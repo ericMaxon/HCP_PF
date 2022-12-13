@@ -143,38 +143,43 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_LONG).show();
         } else {
             if (_pass.equals(_pass2)) {
-                RegisterPayload registerPayload = new RegisterPayload(
-                        _nombre,
-                        _apellido,
-                        _cedula,
-                        _correo,
-                        _pass
-                );
-                progressDialog.setMessage("Registrando cuenta...");
-                progressDialog.show();
+                if (_pass.length() > 5 ){
+                    RegisterPayload registerPayload = new RegisterPayload(
+                            _nombre,
+                            _apellido,
+                            _cedula,
+                            _correo,
+                            _pass
+                    );
+                    progressDialog.setMessage("Registrando cuenta...");
+                    progressDialog.show();
 
-                authService.postRegister(registerPayload)
-                        .enqueue(new Callback<Response<Void>>() {
-                            @Override
-                            public void onResponse(Call<Response<Void>> call, Response<Response<Void>> response) {
-                                progressDialog.dismiss();
-                                if (!response.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "No logramos registrar tu usuario", Toast.LENGTH_SHORT).show();
-                                    call.cancel();
-                                    return;
+                    authService.postRegister(registerPayload)
+                            .enqueue(new Callback<Response<Void>>() {
+                                @Override
+                                public void onResponse(Call<Response<Void>> call, Response<Response<Void>> response) {
+                                    progressDialog.dismiss();
+                                    if (!response.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "No logramos registrar tu usuario", Toast.LENGTH_SHORT).show();
+                                        call.cancel();
+                                        return;
+                                    }
+                                    Toast.makeText(LoginActivity.this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                                    findViewById(R.id.include_login).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.include_register).setVisibility(View.GONE);
+
                                 }
-                                Toast.makeText(LoginActivity.this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
-                                findViewById(R.id.include_login).setVisibility(View.VISIBLE);
-                                findViewById(R.id.include_register).setVisibility(View.GONE);
 
-                            }
+                                @Override
+                                public void onFailure(Call<Response<Void>> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, "Error LA-R> " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(this, "Las contraseña debe tener 6 o mas caracteres", Toast.LENGTH_LONG).show();
+                }
 
-                            @Override
-                            public void onFailure(Call<Response<Void>> call, Throwable t) {
-                                progressDialog.dismiss();
-                                Toast.makeText(LoginActivity.this, "Error LA-R> " + t.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
             } else {
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
             }

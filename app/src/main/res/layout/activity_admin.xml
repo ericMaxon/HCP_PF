@@ -21,25 +21,36 @@
             android:id="@+id/txt_admin_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/whiteTextColor"
-            android:textSize="20dp"
-            android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="10dp"
-            android:text="Panel administrativo"></TextView>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Administrar estudiantes"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="25dp"></TextView>
 
-        <EditText
-            android:id="@+id/edt_admin_filtro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_below="@+id/txt_admin_titulo"></EditText>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_admin_tag"
+            style="@style/parent"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="50dp">
+            <EditText
+                android:id="@+id/edt_admin_filtro"
+                style="@style/modifiedEditText"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="20dp"
+                android:hint="Buscar cedula"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ListView
             android:id="@+id/ls_admin_estudiantes"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/edt_admin_filtro"
-            android:layout_marginHorizontal="20dp"></ListView>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_admin_tag"
+            android:layout_marginHorizontal="20dp"
+            android:dividerHeight="10dp"
+            android:layout_marginVertical="10dp"></ListView>
 
     </RelativeLayout>
 
