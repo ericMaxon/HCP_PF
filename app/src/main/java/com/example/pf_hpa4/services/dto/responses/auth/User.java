@@ -155,7 +155,7 @@ public class User implements IConvertFromJSON<User> {
                     jsonHandler.getString("personalDocument"),
                     jsonHandler.getInt("role"),
                     jsonHandler.getInt("active"),
-                    jsonHandler.getInt("teacherId"),
+                    !jsonHandler.get("teacherId").toString().equals("null") ? jsonHandler.getInt("teacherId") : null,
                     jsonHandler.getString("lastName"),
                     jsonHandler.getString("emailVerifiedDate"));
         } catch (JSONException e) {
