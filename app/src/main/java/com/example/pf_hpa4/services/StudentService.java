@@ -16,6 +16,11 @@ public class StudentService extends AbstractService <IStudentService> implements
     }
 
     @Override
+    public Call<List<Student>> getStudentsAll() {
+        return this.getApiService().getStudentsAll();
+    }
+
+    @Override
     public Call<List<Attendance>> getStudentsAttendeByGroup(int gaId) {
         return this.getApiService().getStudentsAttendeByGroup(gaId);
     }

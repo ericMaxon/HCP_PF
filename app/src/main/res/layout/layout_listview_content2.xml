@@ -27,10 +27,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more"
         android:layout_alignParentRight="true"
-        android:layout_marginHorizontal="15dp"
         android:layout_centerVertical="true"
-        ></ImageView>
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/ic_more"></ImageView>
 
 </RelativeLayout>

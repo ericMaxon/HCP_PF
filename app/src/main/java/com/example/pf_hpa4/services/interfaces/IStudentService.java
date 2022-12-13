@@ -16,6 +16,9 @@ public interface IStudentService {
     @GET("estudiantes/grupos/{gaId}")
     Call<List<Student>> getStudentsByGroup(@Path("gaId") int gaId);
 
+    @GET("estudiantes/all")
+    Call<List<Student>> getStudentsAll();
+
     @GET("estudiantes/asistencia/{gaId}")
     Call<List<Attendance>> getStudentsAttendeByGroup(@Path("gaId") int gaId);
 
