@@ -14,4 +14,6 @@ public interface IGroupService {
     Call<List<Group>> getGroupsByStudentId(@Path("eid") int id);
     @GET("grupos/profesor/{pid}")
     Call<List<Group>> getGroupsByProfesorId(@Path("pid") int pid);
+    @GET("grupos/all")
+    Call<List<Group>> getGroupsAll();
 }

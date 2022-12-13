@@ -18,4 +18,9 @@ public class GroupService extends AbstractService<IGroupService> implements IGro
     public Call<List<Group>> getGroupsByProfesorId(int pid) {
         return this.getApiService().getGroupsByProfesorId(pid);
     }
+
+    @Override
+    public Call<List<Group>> getGroupsAll() {
+        return this.getApiService().getGroupsAll();
+    }
 }

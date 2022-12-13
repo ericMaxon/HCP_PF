@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.Toolbar;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
+import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.NFC.WriteTagHelper;
 import com.example.pf_hpa4.R;
@@ -175,13 +177,15 @@ public class AdminActivity extends AppCompatActivity {
                 dialogo1.setPositiveButton("Matricular", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialogo1, int id) {
+                        setContentView(R.layout.layout_matricular);
 
+                        TextView m_nombre = findViewById(R.id.txt_admin2_subtitulo);
+                        m_nombre.setText(sStudent.getName() + " " + sStudent.getLastName() + "\n" + sStudent.getPersonalDocument());
                     }
                 });
                 dialogo1.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialogo1, int id) {
-
                     }
                 });
                 dialogo1.setNegativeButton("Registar tag", new DialogInterface.OnClickListener() {
@@ -222,6 +226,12 @@ public class AdminActivity extends AppCompatActivity {
             WriteActive = false;
         }
 
+    }
+
+    public void returnLocalMain(View view){
+        startActivity(
+                new Intent(AdminActivity.this, AdminActivity.class)
+        );
     }
 
 }
