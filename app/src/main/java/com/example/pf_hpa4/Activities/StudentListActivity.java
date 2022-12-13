@@ -90,7 +90,7 @@ public class StudentListActivity extends AppCompatActivity {
 
                 Intent i = new Intent(StudentListActivity.this, AttendanceListActivity.class);
                 i.putExtra("json_SelectedStudent", sStudent.toString());
-                i.putExtra("json_SelectedGroup", selectedGroup.toString());//TODO: evaluate if you could change to sharePreference
+                i.putExtra("json_SelectedGroup", selectedGroup.toString());
 
                 startActivity(i);
             }

@@ -31,7 +31,6 @@ public class ApiConstants {
             }
         }
         public static Integer getStatusId(LocalDateTime time, LocalDateTime Starttime){
-            //todo: agregar logica de tardanzas
 
             int minutes = time.getMinute() - Starttime.getMinute();
             int hours = time.getHour() - Starttime.getHour();

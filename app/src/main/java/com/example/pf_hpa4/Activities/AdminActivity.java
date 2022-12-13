@@ -56,9 +56,6 @@ public class AdminActivity extends AppCompatActivity {
 
         SharedPreferences userSP_JSON = getSharedPreferences(SPreferencesKeys.usuario, Context.MODE_PRIVATE);
         user = user.GetFromJSON(userSP_JSON.getString("jsonUser", ""));
-        ///////////TODO: PROBLEMA CON RECIBIR LOS DATOS DEL USUARIO DEL JSON, RETORNA NULL
-
-
         Inicializar_controles();
 
         progressDialog.setMessage("Obteniendo el listado de estudiantes");
