@@ -33,6 +33,7 @@ public class User implements IConvertFromJSON<User> {
     @Nullable
     String emailVerifiedDate;
     @SerializedName("docente_id")
+    @Nullable
     @Expose(deserialize = false, serialize = false)
     Integer teacherId;
 
@@ -41,7 +42,7 @@ public class User implements IConvertFromJSON<User> {
 
     public User(
             Integer userId, String name, String email, String personalDocument,
-            Integer role, Integer active, Integer teacherId, String lastName, @Nullable String emailVerifiedDate) {
+            Integer role, Integer active, @Nullable Integer teacherId, String lastName, @Nullable String emailVerifiedDate) {
         this.userId = userId;
         this.name = name;
         this.email = email;
