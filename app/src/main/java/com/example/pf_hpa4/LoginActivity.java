@@ -19,6 +19,7 @@ import com.example.pf_hpa4.constants.ApiConstants.Role;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.AuthService;
 import com.example.pf_hpa4.services.dto.request.auth.AuthPayload;
+import com.example.pf_hpa4.services.dto.request.auth.RegisterPayload;
 import com.example.pf_hpa4.services.dto.responses.auth.Login;
 
 import java.util.Objects;
@@ -33,6 +34,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText login_user, login_pass, register_nombre, register_apellido, register_cedula, register_pass, register_pass2, register_correo;
     TextView test;
     Button cirLoginButton;
+
+    AuthService authService;
+
+    public LoginActivity() {
+        authService = new AuthService();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +62,15 @@ public class LoginActivity extends AppCompatActivity {
         register_pass = findViewById(R.id.register_pass);
         register_pass2 = findViewById(R.id.register_pass2);
         register_correo = findViewById(R.id.register_correo);
+
+        progressDialog = new ProgressDialog(LoginActivity.this);
     }
 
     public void login(View view) {
-        progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Iniciando sesion...");
         progressDialog.show();
         String cuenta = login_user.getText().toString();
         String pass = login_pass.getText().toString();
-        AuthService authService = new AuthService();
         cirLoginButton.setEnabled(false);
         if (cuenta.equals("") || pass.equals("")) {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_LONG).show();
@@ -83,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                                 Login loginObj = response.body();
-                                if(loginObj == null){
+                                if (loginObj == null) {
                                     Toast.makeText(LoginActivity.this, "Hubo un error al obtener tu información, intenta nuevamente mas tarde", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
@@ -112,12 +119,13 @@ public class LoginActivity extends AppCompatActivity {
                             public void onFailure(Call<Login> call, Throwable t) {
                                 progressDialog.dismiss();
                                 cirLoginButton.setEnabled(true);
-                                Toast.makeText(LoginActivity.this, "Error > " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "Error LA-L> " + t.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
 
             } catch (Exception e) {
-                Toast.makeText(this, "Error > " + e.getMessage(), Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+                Toast.makeText(this, "Error LA-L> " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -131,21 +139,42 @@ public class LoginActivity extends AppCompatActivity {
         String _pass2 = register_pass2.getText().toString();
         String _correo = register_correo.getText().toString();
 
-        if (_nombre.equals("") || _apellido.equals("") || _cedula.equals("") || _pass.equals("") || _pass2.equals("") || _correo.equals("")){
+        if (_nombre.equals("") || _apellido.equals("") || _cedula.equals("") || _pass.equals("") || _pass2.equals("") || _correo.equals("")) {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_LONG).show();
         } else {
             if (_pass.equals(_pass2)) {
-                progressDialog = new ProgressDialog(LoginActivity.this);
+                RegisterPayload registerPayload = new RegisterPayload(
+                        _nombre,
+                        _apellido,
+                        _cedula,
+                        _correo,
+                        _pass
+                );
                 progressDialog.setMessage("Registrando cuenta...");
                 progressDialog.show();
 
-                /////TODO: Retrofit /registrar
+                authService.postRegister(registerPayload)
+                        .enqueue(new Callback<Response<Void>>() {
+                            @Override
+                            public void onResponse(Call<Response<Void>> call, Response<Response<Void>> response) {
+                                progressDialog.dismiss();
+                                if (!response.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "No logramos registrar tu usuario", Toast.LENGTH_SHORT).show();
+                                    call.cancel();
+                                    return;
+                                }
+                                Toast.makeText(LoginActivity.this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                                findViewById(R.id.include_login).setVisibility(View.VISIBLE);
+                                findViewById(R.id.include_register).setVisibility(View.GONE);
 
-                progressDialog.dismiss();
+                            }
 
-                Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
-                findViewById(R.id.include_login).setVisibility(View.VISIBLE);
-                findViewById(R.id.include_register).setVisibility(View.GONE);
+                            @Override
+                            public void onFailure(Call<Response<Void>> call, Throwable t) {
+                                progressDialog.dismiss();
+                                Toast.makeText(LoginActivity.this, "Error LA-R> " + t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
             } else {
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
             }
