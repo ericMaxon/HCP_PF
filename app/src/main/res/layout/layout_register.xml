@@ -24,6 +24,7 @@
             style="@style/parent"
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
+                android:id="@+id/register_nombre"
                 style="@style/modifiedEditText"
                 android:inputType="text"
                 android:maxLines="1"
@@ -34,6 +35,18 @@
             style="@style/parent"
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
+                android:id="@+id/register_apellido"
+                style="@style/modifiedEditText"
+                android:inputType="text"
+                android:maxLines="1"
+                android:hint="Apellido"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/parent"
+            android:layout_marginTop="@dimen/signup_text_margin_top">
+            <EditText
+                android:id="@+id/register_cedula"
                 style="@style/modifiedEditText"
                 android:inputType="text"
                 android:maxLines="1"
@@ -44,6 +57,7 @@
             style="@style/parent"
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
+                android:id="@+id/register_correo"
                 style="@style/modifiedEditText"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
@@ -54,6 +68,7 @@
             style="@style/parent"
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
+                android:id="@+id/register_pass"
                 style="@style/modifiedEditText"
                 android:hint="@string/login_password_hint"
                 android:maxLines="1"
@@ -64,6 +79,7 @@
             style="@style/parent"
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
+                android:id="@+id/register_pass2"
                 style="@style/modifiedEditText"
                 android:hint="Repetir contraseña"
                 android:maxLines="1"
