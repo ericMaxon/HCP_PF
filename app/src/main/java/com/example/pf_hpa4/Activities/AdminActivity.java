@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Group;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.LoginActivity;
@@ -33,9 +34,11 @@ import com.example.pf_hpa4.NFC.WriteTagHelper;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
+import com.example.pf_hpa4.services.GroupService;
 import com.example.pf_hpa4.services.StudentService;
 import com.example.pf_hpa4.services.dto.responses.auth.User;
 import com.example.pf_hpa4.services.dto.responses.student.Attendance;
+import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.example.pf_hpa4.services.dto.responses.student.Student;
 
 import java.text.DateFormat;
@@ -44,6 +47,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -142,18 +146,19 @@ public class AdminActivity extends AppCompatActivity {
 
                 List<Student> studentList2 = new ArrayList<Student>();
 
-                Boolean verified = false;
                 for (int x = 0; x < studentList.size(); x++){
                     String check = (studentList.get(x).getPersonalDocument());
                     if (check.contains(busqueda.getText().toString())){
-                        verified = true;
-                        studentList2.add(new Student(studentList.get(x).getStudentId(), studentList.get(x).getName(), studentList.get(x).getLastName(), studentList.get(x).getPersonalDocument(), studentList.get(x).getEmail(), studentList.get(x).getPhoto()));
+                        studentList2.add(new Student(studentList.get(x).getStudentId(),
+                                studentList.get(x).getName(),
+                                studentList.get(x).getLastName(),
+                                studentList.get(x).getPersonalDocument(),
+                                studentList.get(x).getEmail(),
+                                studentList.get(x).getPhoto()));
                     }
                 }
-                if (verified) {
-                    adapter = new ListViewAdapter_PassList(AdminActivity.this, studentList2);
-                    estudiantes.setAdapter(adapter);
-                }
+                adapter = new ListViewAdapter_PassList(AdminActivity.this, studentList2);
+                estudiantes.setAdapter(adapter);
             }
 
             @Override
@@ -179,8 +184,106 @@ public class AdminActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         setContentView(R.layout.layout_matricular);
 
+                        progressDialog.setMessage("Obteniendo listado de grupos...");
+                        progressDialog.show();
+
                         TextView m_nombre = findViewById(R.id.txt_admin2_subtitulo);
+                        ListView lista_grupos = findViewById(R.id.ls_admin2_grupos);
+
                         m_nombre.setText(sStudent.getName() + " " + sStudent.getLastName() + "\n" + sStudent.getPersonalDocument());
+
+                        GroupService groupService = new GroupService();
+
+                        Call<List<Group>> service = groupService.getGroupsAll();
+                        service
+                                .enqueue(new Callback<List<Group>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
+                                        progressDialog.dismiss();
+                                        if (!response.isSuccessful()) {
+                                            Toast.makeText(AdminActivity.this, "No pudimos obtener la informacion de los grupos", Toast.LENGTH_SHORT).show();
+                                            call.cancel();
+                                            return;
+                                        }
+                                        List<Group> groupList = response.body();
+                                        if (groupList == null) {
+                                            Toast.makeText(AdminActivity.this, "No pudimos registrar el listado de grupos", Toast.LENGTH_SHORT).show();
+                                            call.cancel();
+                                            return;
+                                        }
+                                        ListViewAdapter_Group adapter = new ListViewAdapter_Group(AdminActivity.this, groupList);
+                                        lista_grupos.setAdapter(adapter);
+
+                                        lista_grupos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                                                Group selectedGroup = ((Group) a.getItemAtPosition(position));
+
+                                                AlertDialog.Builder matri = new AlertDialog.Builder(AdminActivity.this);
+                                                matri.setTitle("[" + sStudent.getPersonalDocument() + "] " + sStudent.getName() + " " + sStudent.getLastName());
+                                                matri.setMessage("Matricula para el curso:\n[" +
+                                                        selectedGroup.getGroupName() + "] " +
+                                                        selectedGroup.getSubject() + "\nPeriodo: " +
+                                                        selectedGroup.getSemester() + "\n\n¿Desea continuar?");
+                                                matri.setCancelable(false);
+                                                matri.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface matri, int id) {
+
+                                                        ////////////////////////////////////
+
+                                                    }
+                                                });
+                                                matri.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface matri, int id) {
+                                                    }
+                                                });
+
+                                                matri.show();
+                                            }
+                                        });
+
+
+                                        EditText busqueda_g = findViewById(R.id.edt_admin2_filtro);
+                                        busqueda_g.addTextChangedListener(new TextWatcher() {
+                                            @Override
+                                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                            }
+
+                                            @Override
+                                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                                List<Group> groupList2 = new ArrayList<Group>();
+
+                                                for (int x = 0; x < groupList.size(); x++){
+                                                    String check = (groupList.get(x).getSubject());
+                                                    if (check.contains(busqueda_g.getText().toString())){
+                                                        groupList2.add(new Group(groupList.get(x).getGroupId(),
+                                                                groupList.get(x).getGroupName(),
+                                                                groupList.get(x).getSubject(),
+                                                                groupList.get(x).getSubjectCode(),
+                                                                groupList.get(x).getSemester(),
+                                                                groupList.get(x).getTeacherId()));
+                                                    }
+                                                }
+                                                ListViewAdapter_Group adapter = new ListViewAdapter_Group(AdminActivity.this, groupList2);
+                                                lista_grupos.setAdapter(adapter);
+                                            }
+
+                                            @Override
+                                            public void afterTextChanged(Editable editable) {
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<Group>> call, Throwable t) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AdminActivity.this, "Error GLA > " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
                     }
                 });
                 dialogo1.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
