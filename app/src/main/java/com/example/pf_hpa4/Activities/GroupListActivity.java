@@ -84,7 +84,7 @@ public class GroupListActivity extends AppCompatActivity {
     private void Inicializar_controles() {
         progressDialog = new ProgressDialog(this);
         txt_perfil_nombre = (TextView) findViewById(R.id.txt_perfil_nombre);
-        txt_perfil_nombre.setText(user.getName() + " " + user.getLastName());
+        txt_perfil_nombre.setText(user.getName().trim() + " " + user.getLastName().trim());
 
         txt_perfil_correo = (TextView) findViewById(R.id.txt_perfil_correo);
         txt_perfil_correo.setText(user.getEmail());

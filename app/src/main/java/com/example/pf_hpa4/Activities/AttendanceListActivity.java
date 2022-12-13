@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class AttendanceListActivity extends AppCompatActivity {
 
     ListView Listado_Asistencias;
 
-    TextView txtSubtitulo, txtTitulo, txtCedula;
+    TextView txtSubtitulo, txtTitulo, txtCedula, Asistencias, Tardanzas, Ausencias;
 
     Group selectedGroup = new Group();
     Student selectedStudent = new Student();
@@ -72,6 +73,25 @@ public class AttendanceListActivity extends AppCompatActivity {
                         }
                         LoadListView_Attendance(attendanceList);
 
+                        int as = 0;
+                        int tar = 0;
+                        int aus = 0;
+
+                        for (int i = 0; i < attendanceList.size(); i++){
+                            int check = (attendanceList.get(i).getSubjectStatusId());
+                            if (check == 1 || check == 4){
+                                as++;
+                            } else if (check == 2){
+                                tar++;
+                            }
+                            else if (check == 3){
+                                aus++;
+                            }
+                        }
+
+                        Asistencias.setText("Asistencias\n" + as);
+                        Tardanzas.setText("Tardanzas\n" + tar);
+                        Ausencias.setText("Ausencias\n" + aus);
 
                     }
 
@@ -88,13 +108,17 @@ public class AttendanceListActivity extends AppCompatActivity {
         Listado_Asistencias = findViewById(R.id.asistencia_lvGrupos);
 
         txtTitulo = findViewById(R.id.txt_asistencia_titulo);
-        txtTitulo.setText(selectedStudent.getName() + " " + selectedStudent.getLastName());
+        txtTitulo.setText(selectedStudent.getName().trim() + " " + selectedStudent.getLastName().trim());
 
         txtCedula = findViewById(R.id.txt_asistencia_cedula);
         txtCedula.setText(selectedStudent.getPersonalDocument());
 
         txtSubtitulo = findViewById(R.id.txt_asistencia_subtitulo);
         txtSubtitulo.setText(selectedGroup.getSubject());
+
+        Asistencias = findViewById(R.id.txt_asistencia_presente);
+        Tardanzas = findViewById(R.id.txt_asistencia_tardanza);
+        Ausencias = findViewById(R.id.txt_asistencia_ausencia);
     }
 
     private void MapInfoFromIntent(Intent i) {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pf_hpa4.R;
@@ -37,6 +38,17 @@ public class ListViewAdapter_Attendance extends ArrayAdapter<Attendance> {
         TextView lblRightSubTitulo = (TextView) item.findViewById(R.id.txt_listviewContent_rigthSubTitulo);
 
         lblRightSubTitulo.setText(AttendeeStatus.getStatus(opciones.get(position).getSubjectStatusId()));
+
+        RelativeLayout content = item.findViewById(R.id.rl_listview_content);
+        if (opciones.get(position).getSubjectStatusId() == 1) {
+            content.setBackgroundResource(R.drawable.green_circular_bk);
+        } else if (opciones.get(position).getSubjectStatusId() == 2){
+            content.setBackgroundResource(R.drawable.yelow_circular_bk);
+        }else if (opciones.get(position).getSubjectStatusId() == 3){
+            content.setBackgroundResource(R.drawable.red_circular_bk);
+        }else {
+            content.setBackgroundResource(R.drawable.yelow_circular_bk);
+        }
 
         return (item);
     }

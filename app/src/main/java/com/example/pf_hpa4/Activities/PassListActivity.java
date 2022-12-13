@@ -139,7 +139,7 @@ public class PassListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         studentList_temp.remove(position);
                         adapter_temp.notifyDataSetChanged();
-                        cargar_asistencia(sStudent.getStudentId(), (sStudent.getName() + " " + sStudent.getLastName()), sStudent.getPersonalDocument());
+                        cargar_asistencia(sStudent.getStudentId(), (sStudent.getName().trim() + " " + sStudent.getLastName().trim()), sStudent.getPersonalDocument());
                     }
                 });
                 dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

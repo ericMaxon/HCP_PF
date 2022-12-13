@@ -126,7 +126,7 @@ public class AdminActivity extends AppCompatActivity {
     private void Inicializar_controles() {
         progressDialog = new ProgressDialog(this);
         txt_perfil_nombre = (TextView) findViewById(R.id.txt_perfil_nombre);
-        txt_perfil_nombre.setText(user.getName() + " " + user.getLastName());
+        txt_perfil_nombre.setText(user.getName().trim() + " " + user.getLastName().trim());
 
         txt_perfil_correo = (TextView) findViewById(R.id.txt_perfil_correo);
         txt_perfil_correo.setText(user.getEmail());
@@ -190,7 +190,7 @@ public class AdminActivity extends AppCompatActivity {
                         TextView m_nombre = findViewById(R.id.txt_admin2_subtitulo);
                         ListView lista_grupos = findViewById(R.id.ls_admin2_grupos);
 
-                        m_nombre.setText(sStudent.getName() + " " + sStudent.getLastName() + "\n" + sStudent.getPersonalDocument());
+                        m_nombre.setText(sStudent.getName().trim() + " " + sStudent.getLastName().trim() + "\n" + sStudent.getPersonalDocument());
 
                         GroupService groupService = new GroupService();
 
@@ -219,7 +219,7 @@ public class AdminActivity extends AppCompatActivity {
                                                 Group selectedGroup = ((Group) a.getItemAtPosition(position));
 
                                                 AlertDialog.Builder matri = new AlertDialog.Builder(AdminActivity.this);
-                                                matri.setTitle("[" + sStudent.getPersonalDocument() + "] " + sStudent.getName() + " " + sStudent.getLastName());
+                                                matri.setTitle("[" + sStudent.getPersonalDocument() + "] " + sStudent.getName().trim() + " " + sStudent.getLastName().trim());
                                                 matri.setMessage("Matricula para el curso:\n[" +
                                                         selectedGroup.getGroupName() + "] " +
                                                         selectedGroup.getSubject() + "\nPeriodo: " +
@@ -296,7 +296,7 @@ public class AdminActivity extends AppCompatActivity {
                 });
                 dialogo1.setNegativeButton("Registar tag", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        String text = sStudent.getName() + " " + sStudent.getLastName();
+                        String text = sStudent.getName().trim() + " " + sStudent.getLastName().trim();
                         String text2 = sStudent.getPersonalDocument();
                         String text3 = (sStudent.getStudentId()).toString();
                         String encodedText = Base64.getEncoder().encodeToString(text.getBytes());

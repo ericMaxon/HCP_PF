@@ -25,7 +25,7 @@ public class ApiConstants {
                 case EAttendeeStatus.absentId:
                     return "Ausencia";
                 case EAttendeeStatus.excusedAbsenceId:
-                    return "Ausencia con excusa";
+                    return "Ausencia justificada";
                 default:
                     return "No se ha definido el estado de la asistencia";
             }
@@ -35,7 +35,7 @@ public class ApiConstants {
             int minutes = time.getMinute() - Starttime.getMinute();
             int hours = time.getHour() - Starttime.getHour();
 
-            if ((hours < 1) && (minutes < 3) ) {
+            if ((hours < 1) && (minutes < PasarAsistencia.timeLate) ) {
                 return EAttendeeStatus.presentId;
             } else {
                 return EAttendeeStatus.lateId;
@@ -47,5 +47,9 @@ public class ApiConstants {
         public static Integer admin = 1;
         public static Integer teacher = 2;
         public static Integer student = 3;
+    }
+
+    public static class PasarAsistencia{
+        public static Integer timeLate = 3; //Tiempo despues de iniciar un registro de asistencia para marcar al estudiante como tardanza
     }
 }
