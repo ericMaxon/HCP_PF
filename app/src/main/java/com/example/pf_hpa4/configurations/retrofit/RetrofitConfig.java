@@ -1,6 +1,8 @@
 package com.example.pf_hpa4.configurations.retrofit;
 
 import com.example.pf_hpa4.constants.ApiConstants;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -16,9 +18,10 @@ public class RetrofitConfig {
                     .setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor);
+            Gson gson = new GsonBuilder().create();
             retrofitClient = new Retrofit.Builder()
                     .baseUrl(ApiConstants.BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(httpClient.build())
                     .build();
         }
