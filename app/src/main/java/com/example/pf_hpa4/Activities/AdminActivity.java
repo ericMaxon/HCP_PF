@@ -228,6 +228,9 @@ public class AdminActivity extends AppCompatActivity {
                                                 matri.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface matri, int id) {
 
+                                                        int Estudiante_ID = sStudent.getStudentId();
+                                                        int Grupo_ID = selectedGroup.getGroupId();
+
                                                         ////////////////////////////////////
 
                                                     }
