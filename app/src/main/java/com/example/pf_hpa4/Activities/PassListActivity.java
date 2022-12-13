@@ -208,12 +208,7 @@ public class PassListActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         progressDialog.dismiss();
-                        String Asis_T;
-                        if (Asis == ApiConstants.EAttendeeStatus.presentId) {
-                            Asis_T = "Presente";
-                        } else{
-                            Asis_T = "Tardanza";
-                        }
+                        String Asis_T = ApiConstants.AttendeeStatus.getStatus(Asis);
                         Toast.makeText(PassListActivity.this, "Se registro como " + Asis_T + " para:  " + name + " | " + ced, Toast.LENGTH_LONG).show();
                     }
 
