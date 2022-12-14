@@ -31,7 +31,7 @@ public class StudentService extends AbstractService <IStudentService> implements
     }
 
     @Override
-    public Call<Integer> postStudentsSubject(Attendance body) {
+    public Call<Attendance> postStudentsSubject(Attendance body) {
         return this.getApiService().postStudentsSubject(body);
     }
 }
