@@ -36,13 +36,13 @@
 
         <Button
             style="@style/loginButton"
-            android:layout_alignParentRight="true"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginHorizontal="10dp"
-            android:onClick="returnLocalMain"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="15dp"
+            android:onClick="returnLocalMain"
             android:text="Volver" />
 
 

@@ -13,14 +13,25 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp">
 
+        <Button
+            style="@style/loginButton"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="15dp"
+            android:onClick="returnStudents"
+            android:text="Volver" />
+
         <TextView
             android:id="@+id/txt_asistencia_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/whiteTextColor"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:text="Listado de Asistencia"
+            android:textColor="@color/whiteTextColor"
             android:textSize="25dp"></TextView>
 
         <TextView

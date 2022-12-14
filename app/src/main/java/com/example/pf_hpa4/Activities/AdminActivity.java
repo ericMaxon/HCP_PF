@@ -3,11 +3,13 @@ package com.example.pf_hpa4.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Group;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
+import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.NFC.WriteTagHelper;
 import com.example.pf_hpa4.R;
@@ -58,6 +62,8 @@ public class AdminActivity extends AppCompatActivity {
 
     WriteTagHelper writeHelper;
     NFCManager nfcManager;
+    NfcAdapter nfcAdapter;
+    PendingIntent pendingIntent;
 
     Boolean WriteActive = false;
 
@@ -135,6 +141,7 @@ public class AdminActivity extends AppCompatActivity {
 
         img_perfil_imagen = (CircleImageView) findViewById(R.id.img_perfil_imagen);
         /////Falta la captura de la url del perfil
+
 
         busqueda = findViewById(R.id.edt_admin_filtro);
         busqueda.addTextChangedListener(new TextWatcher() {
@@ -322,14 +329,24 @@ public class AdminActivity extends AppCompatActivity {
                 });
                 dialogo1.setNegativeButton("Registar tag", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        String text = sStudent.getName().trim() + " " + sStudent.getLastName().trim();
-                        String text2 = sStudent.getPersonalDocument();
-                        String text3 = (sStudent.getStudentId()).toString();
-                        String encodedText = Base64.getEncoder().encodeToString(text.getBytes());
-                        String encodedText2 = Base64.getEncoder().encodeToString(text2.getBytes());
-                        String encodedText3 = Base64.getEncoder().encodeToString(text3.getBytes());
-                        WriteActive = true;
-                        writeHelper.writeText(encodedText, encodedText2, encodedText3);
+                        try {
+                            pendingIntent = PendingIntent.getActivity(AdminActivity.this, 0,
+                                    new Intent(AdminActivity.this, AdminActivity.this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+                            String text = sStudent.getName().trim() + " " + sStudent.getLastName().trim();
+                            String text2 = sStudent.getPersonalDocument();
+                            String text3 = (sStudent.getStudentId()).toString();
+                            String encodedText = Base64.getEncoder().encodeToString(text.getBytes());
+                            String encodedText2 = Base64.getEncoder().encodeToString(text2.getBytes());
+                            String encodedText3 = Base64.getEncoder().encodeToString(text3.getBytes());
+                            WriteActive = true;
+                            writeHelper.writeText(encodedText, encodedText2, encodedText3);
+
+                        }catch (Exception e){
+                            AlertDialog.Builder notNFC = new AlertDialog.Builder(AdminActivity.this);
+                            notNFC.setTitle("Su dispositivo no cuenta con NFC");
+                            notNFC.show();
+                        }
                     }
                 });
                 dialogo1.show();
@@ -363,6 +380,12 @@ public class AdminActivity extends AppCompatActivity {
     public void returnLocalMain(View view) {
         startActivity(
                 new Intent(AdminActivity.this, AdminActivity.class)
+        );
+    }
+
+    public void returnLogin(View view){
+        startActivity(
+                new Intent(AdminActivity.this, LoginActivity.class)
         );
     }
 

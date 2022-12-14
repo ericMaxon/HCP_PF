@@ -278,10 +278,14 @@ public class PassListActivity extends AppCompatActivity {
                                 public void onResponse(Call<Attendance> call, Response<Attendance> response) {
                                     if (!response.isSuccessful()) {
                                         ErrorResponse errorResponse = ErrorResponse.GetResponseError(response.errorBody());
-                                        if (errorResponse != null)
-                                            Toast.makeText(PassListActivity.this, errorResponse.getMessage(), Toast.LENGTH_LONG).show();
-                                        else
-                                            Toast.makeText(PassListActivity.this, "No se puedo registrar la asistencia", Toast.LENGTH_LONG).show();
+                                        if (errorResponse != null){
+                                            if (!errorResponse.getMessage().contains("ya existe registro")){
+                                                Toast.makeText(PassListActivity.this, errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        } else {
+                                                Toast.makeText(PassListActivity.this, "No se puedo registrar la asistencia", Toast.LENGTH_LONG).show();
+                                            }
+
                                         return;
                                     }
                                 }

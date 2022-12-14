@@ -4,4 +4,8 @@
         android:id="@+id/menu_pasar_asistencia"
         android:title="Pasar Asistencia">
     </item>
+    <item
+        android:id="@+id/menu_regresar"
+        android:title="Regresar">
+    </item>
 </menu>

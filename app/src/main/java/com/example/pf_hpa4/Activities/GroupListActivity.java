@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Group;
 
+import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.ApiConstants.Role;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
@@ -117,6 +118,12 @@ public class GroupListActivity extends AppCompatActivity {
     private void LoadListView_Grupos(List<Group> groupData) {
         ListViewAdapter_Group adapter = new ListViewAdapter_Group(this, groupData);
         Listado_Grupos.setAdapter(adapter);
+    }
+
+    public void returnLogin(View view){
+        startActivity(
+                new Intent(GroupListActivity.this, LoginActivity.class)
+        );
     }
 
 

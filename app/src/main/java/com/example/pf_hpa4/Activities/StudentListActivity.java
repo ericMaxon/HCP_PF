@@ -106,6 +106,9 @@ public class StudentListActivity extends AppCompatActivity {
                     Intent i = new Intent(StudentListActivity.this, PassListActivity.class);
                     i.putExtra("json_SelectedGroup", selectedGroup.toString());
                     startActivity(i);
+                } else if (item.getItemId() == R.id.menu_regresar){
+                    Intent i = new Intent(StudentListActivity.this, GroupListActivity.class);
+                    startActivity(i);
                 }
                 return false;
             }

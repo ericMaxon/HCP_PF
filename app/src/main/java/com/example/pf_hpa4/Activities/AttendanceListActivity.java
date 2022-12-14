@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Attendance;
+import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.StudentService;
@@ -133,6 +135,12 @@ public class AttendanceListActivity extends AppCompatActivity {
         ListViewAdapter_Attendance adapter = new ListViewAdapter_Attendance(this, attendanceList);
 
         Listado_Asistencias.setAdapter(adapter);
+    }
+
+    public void returnStudents(View view){
+        Intent i = new Intent(AttendanceListActivity.this, StudentListActivity.class)
+                .putExtra("json_SelectedGroup", selectedGroup.toString());
+        startActivity(i);
     }
 
 }
