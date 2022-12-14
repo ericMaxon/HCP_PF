@@ -18,16 +18,20 @@ import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.services.StudentService;
+import com.example.pf_hpa4.services.dto.responses.ErrorResponse;
 import com.example.pf_hpa4.services.dto.responses.student.Attendance;
 import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.example.pf_hpa4.services.dto.responses.student.Student;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -152,7 +156,8 @@ public class PassListActivity extends AppCompatActivity {
         });
         handleTagListener();
     }
-    private void handleTagListener(){
+
+    private void handleTagListener() {
         nfcManager.setOnTagReadListener(new NFCManager.TagReadListener() {
             @Override
             public void onTagRead(String[] tagRead) {
@@ -161,9 +166,9 @@ public class PassListActivity extends AppCompatActivity {
                 String idUser = tagRead[2];
 
                 Boolean verified = false;
-                for (int i = 0; i < studentList_temp.size(); i++){
+                for (int i = 0; i < studentList_temp.size(); i++) {
                     String check = (studentList_temp.get(i).getStudentId()).toString();
-                    if (check.equals(idUser)){
+                    if (check.equals(idUser)) {
                         studentList_temp.remove(i);
                         adapter_temp.notifyDataSetChanged();
                         verified = true;
@@ -177,7 +182,8 @@ public class PassListActivity extends AppCompatActivity {
         });
 
     }
-    private void cargar_asistencia(Integer idUser, String name, String ced){
+
+    private void cargar_asistencia(Integer idUser, String name, String ced) {
         progressDialog.setMessage("Marcando asistencia...");
         progressDialog.show();
 
@@ -193,26 +199,32 @@ public class PassListActivity extends AppCompatActivity {
                 Asis
         );
         studentService.postStudentsSubject(payload)
-                .enqueue(new Callback<Integer>() {
+                .enqueue(new Callback<Attendance>() {
                     @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    public void onResponse(Call<Attendance> call, Response<Attendance> response) {
                         progressDialog.dismiss();
+                        if (!response.isSuccessful()) {
+                            ErrorResponse errorResponse = ErrorResponse.GetResponseError(response.errorBody());
+                            if (errorResponse != null)
+                                Toast.makeText(PassListActivity.this, errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(PassListActivity.this, "No se puedo registrar la asistencia", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         String Asis_T = ApiConstants.AttendeeStatus.getStatus(Asis);
                         Toast.makeText(PassListActivity.this, "Se registro como " + Asis_T + " para:  " + name + " | " + ced, Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
+                    public void onFailure(Call<Attendance> call, Throwable t) {
                         progressDialog.dismiss();
-                        Toast.makeText(PassListActivity.this, "No pudimos registrar la asistencia", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PassListActivity.this, "Hubo un error al registrar la asistencia", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-
     }
 
-    public void finalizar_asistencia(View view){
+    public void finalizar_asistencia(View view) {
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(PassListActivity.this);
         dialogo1.setTitle("Cerrar listado de asistencia");
         dialogo1.setMessage("Al cerrar el listado todos los estudiantes que no se registraron seran marcados con ausencia. ¿Desea continuar?");
@@ -222,7 +234,7 @@ public class PassListActivity extends AppCompatActivity {
             Date currentDate = new Date();
 
             public void onClick(DialogInterface dialogo1, int id) {
-                for (int i = 0; i < studentList_temp.size(); i++){
+                for (int i = 0; i < studentList_temp.size(); i++) {
                     String idStudent = (studentList_temp.get(i).getStudentId()).toString();
 
                     int posActual = i;
@@ -236,19 +248,24 @@ public class PassListActivity extends AppCompatActivity {
                             ApiConstants.EAttendeeStatus.absentId
                     );
                     studentService.postStudentsSubject(payload)
-                            .enqueue(new Callback<Integer>() {
+                            .enqueue(new Callback<Attendance>() {
                                 @Override
-                                public void onResponse(Call<Integer> call, Response<Integer> response) {
-                                    //////No se requiere ninguna accion
+                                public void onResponse(Call<Attendance> call, Response<Attendance> response) {
+                                    if (!response.isSuccessful()) {
+                                        ErrorResponse errorResponse = ErrorResponse.GetResponseError(response.errorBody());
+                                        if (errorResponse != null)
+                                            Toast.makeText(PassListActivity.this, errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                                        else
+                                            Toast.makeText(PassListActivity.this, "No se puedo registrar la asistencia", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
                                 }
 
                                 @Override
-                                public void onFailure(Call<Integer> call, Throwable t) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(PassListActivity.this, "No pudimos registrar la asistencia", Toast.LENGTH_SHORT).show();
+                                public void onFailure(Call<Attendance> call, Throwable t) {
+                                    Toast.makeText(PassListActivity.this, "Hubo un error al registrar la asistencia", Toast.LENGTH_SHORT).show();
                                 }
                             });
-
 
 
                 }

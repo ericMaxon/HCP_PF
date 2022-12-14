@@ -12,9 +12,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -23,33 +20,31 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Group;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
-import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
-import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.NFC.WriteTagHelper;
 import com.example.pf_hpa4.R;
-import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
+import com.example.pf_hpa4.services.AdminService;
 import com.example.pf_hpa4.services.GroupService;
 import com.example.pf_hpa4.services.StudentService;
+import com.example.pf_hpa4.services.dto.request.admin.EnrollPayload;
+import com.example.pf_hpa4.services.dto.responses.ErrorResponse;
+import com.example.pf_hpa4.services.dto.responses.admin.EnrollResponse;
 import com.example.pf_hpa4.services.dto.responses.auth.User;
-import com.example.pf_hpa4.services.dto.responses.student.Attendance;
 import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.example.pf_hpa4.services.dto.responses.student.Student;
+import com.google.gson.Gson;
 
-import java.text.DateFormat;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,14 +61,21 @@ public class AdminActivity extends AppCompatActivity {
 
     Boolean WriteActive = false;
 
-    User user = new User();
-    StudentService studentService = new StudentService();
+    User user;
+    StudentService studentService;
+    AdminService adminService;
     ListViewAdapter_PassList adapter;
     List<Student> studentList;
 
     private PopupMenu popup;
 
     ProgressDialog progressDialog;
+
+    public AdminActivity() {
+        studentService = new StudentService();
+        user = new User();
+        adminService = new AdminService();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class AdminActivity extends AppCompatActivity {
         nfcManager = new NFCManager(this);
         nfcManager.onActivityCreate();
 
-        writeHelper= new WriteTagHelper(AdminActivity.this, nfcManager);
+        writeHelper = new WriteTagHelper(AdminActivity.this, nfcManager);
         nfcManager.setOnTagWriteErrorListener(writeHelper);
         nfcManager.setOnTagWriteListener(writeHelper);
 
@@ -146,9 +148,9 @@ public class AdminActivity extends AppCompatActivity {
 
                 List<Student> studentList2 = new ArrayList<Student>();
 
-                for (int x = 0; x < studentList.size(); x++){
+                for (int x = 0; x < studentList.size(); x++) {
                     String check = (studentList.get(x).getPersonalDocument());
-                    if (check.contains(busqueda.getText().toString())){
+                    if (check.contains(busqueda.getText().toString())) {
                         studentList2.add(new Student(studentList.get(x).getStudentId(),
                                 studentList.get(x).getName(),
                                 studentList.get(x).getLastName(),
@@ -228,10 +230,34 @@ public class AdminActivity extends AppCompatActivity {
                                                 matri.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface matri, int id) {
 
-                                                        int Estudiante_ID = sStudent.getStudentId();
-                                                        int Grupo_ID = selectedGroup.getGroupId();
+                                                        EnrollPayload enrollPayload = new EnrollPayload(
+                                                                sStudent.getStudentId(), selectedGroup.getGroupId());
 
-                                                        ////////////////////////////////////
+                                                        progressDialog.setMessage("Matriculando al estudiante...");
+                                                        progressDialog.show();
+                                                        adminService.postEnrollStudent(enrollPayload)
+                                                                .enqueue(new Callback<EnrollResponse>() {
+                                                                    @Override
+                                                                    public void onResponse(Call<EnrollResponse> call, Response<EnrollResponse> response) {
+                                                                        progressDialog.dismiss();
+                                                                        if (!response.isSuccessful()) {
+                                                                            ErrorResponse errorResponse = ErrorResponse.GetResponseError(response.errorBody());
+                                                                            if (errorResponse != null)
+                                                                                Toast.makeText(AdminActivity.this, errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                                                                            else
+                                                                                Toast.makeText(AdminActivity.this, "No se pudo matricular al estudiante", Toast.LENGTH_LONG).show();
+                                                                            return;
+                                                                        }
+                                                                        Toast.makeText(AdminActivity.this, "El estudiante fue matriculado exitosamente", Toast.LENGTH_LONG).show();
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onFailure(Call<EnrollResponse> call, Throwable t) {
+                                                                        progressDialog.dismiss();
+                                                                        Toast.makeText(AdminActivity.this, "Hubo un error al registrar la asistencia", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                });
+
 
                                                     }
                                                 });
@@ -257,9 +283,9 @@ public class AdminActivity extends AppCompatActivity {
 
                                                 List<Group> groupList2 = new ArrayList<Group>();
 
-                                                for (int x = 0; x < groupList.size(); x++){
+                                                for (int x = 0; x < groupList.size(); x++) {
                                                     String check = (groupList.get(x).getSubject());
-                                                    if (check.contains(busqueda_g.getText().toString())){
+                                                    if (check.contains(busqueda_g.getText().toString())) {
                                                         groupList2.add(new Group(groupList.get(x).getGroupId(),
                                                                 groupList.get(x).getGroupName(),
                                                                 groupList.get(x).getSubject(),
@@ -334,7 +360,7 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
-    public void returnLocalMain(View view){
+    public void returnLocalMain(View view) {
         startActivity(
                 new Intent(AdminActivity.this, AdminActivity.class)
         );
