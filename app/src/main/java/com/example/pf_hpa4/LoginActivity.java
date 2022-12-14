@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -68,10 +69,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
         progressDialog.setMessage("Iniciando sesion...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         String cuenta = login_user.getText().toString();
         String pass = login_pass.getText().toString();
         cirLoginButton.setEnabled(false);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(login_pass.getWindowToken(), 0);
+
         if (cuenta.equals("") || pass.equals("")) {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_LONG).show();
             cirLoginButton.setEnabled(true);
@@ -144,6 +150,10 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             if (_pass.equals(_pass2)) {
                 if (_pass.length() > 5 ){
+                    progressDialog.setMessage("Registrando cuenta...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
                     RegisterPayload registerPayload = new RegisterPayload(
                             _nombre,
                             _apellido,
@@ -151,8 +161,8 @@ public class LoginActivity extends AppCompatActivity {
                             _correo,
                             _pass
                     );
-                    progressDialog.setMessage("Registrando cuenta...");
-                    progressDialog.show();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(register_pass2.getWindowToken(), 0);
 
                     authService.postRegister(registerPayload)
                             .enqueue(new Callback<Response<Void>>() {

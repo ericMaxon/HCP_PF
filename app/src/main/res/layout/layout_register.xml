@@ -27,6 +27,7 @@
                 android:id="@+id/register_nombre"
                 style="@style/modifiedEditText"
                 android:inputType="text"
+                android:textColor="#D7DBDD"
                 android:maxLines="1"
                 android:hint="Nombre"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -37,6 +38,7 @@
             <EditText
                 android:id="@+id/register_apellido"
                 style="@style/modifiedEditText"
+                android:textColor="#D7DBDD"
                 android:inputType="text"
                 android:maxLines="1"
                 android:hint="Apellido"/>
@@ -47,6 +49,7 @@
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
                 android:id="@+id/register_cedula"
+                android:textColor="#D7DBDD"
                 style="@style/modifiedEditText"
                 android:inputType="text"
                 android:maxLines="1"
@@ -60,6 +63,7 @@
                 android:id="@+id/register_correo"
                 style="@style/modifiedEditText"
                 android:inputType="textEmailAddress"
+                android:textColor="#D7DBDD"
                 android:maxLines="1"
                 android:hint="@string/login_email_hint"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +75,7 @@
                 android:id="@+id/register_pass"
                 style="@style/modifiedEditText"
                 android:hint="@string/login_password_hint"
+                android:textColor="#D7DBDD"
                 android:maxLines="1"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -81,6 +86,7 @@
             <EditText
                 android:id="@+id/register_pass2"
                 style="@style/modifiedEditText"
+                android:textColor="#D7DBDD"
                 android:hint="Repetir contraseña"
                 android:maxLines="1"
                 android:inputType="textPassword"/>
