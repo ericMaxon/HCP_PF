@@ -86,7 +86,7 @@ public class PassListActivity extends AppCompatActivity {
             notNFC.show();
 
             TextView sub = (TextView) findViewById(R.id.txt_pass_tagTitulo);
-            sub.setText("No cuenta con NFC para registrar la asistencia por Tag NFC");
+            sub.setText("Asistencia por Tag NFC desactivada");
 
             ImageView img = findViewById(R.id.img_pass_nfc);
             img.setImageResource(R.drawable.user_dp);
