@@ -48,11 +48,24 @@
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/rl_estudiante_titular">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_estudiante_filtro"
+            style="@style/parent"
+            android:layout_marginHorizontal="10dp">
+            <EditText
+                android:id="@+id/edt_estudiante_filtro"
+                style="@style/modifiedEditText"
+                android:inputType="text"
+                android:maxLines="1"
+                android:hint="Buscar nombre"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <ListView
             android:id="@+id/estudiantes_lvGrupos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
+            android:layout_below="@+id/txt_estudiante_filtro"
             android:dividerHeight="10dp"></ListView>
 
     </RelativeLayout>

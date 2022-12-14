@@ -67,11 +67,25 @@
             android:textColor="@color/whiteTextColor"
             android:textSize="15dp"></TextView>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_pass_filtro"
+            style="@style/parent"
+            android:layout_below="@+id/txt_pass_listado"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp">
+            <EditText
+                android:id="@+id/edt_pass_filtro"
+                style="@style/modifiedEditText"
+                android:inputType="text"
+                android:maxLines="1"
+                android:hint="Buscar estudiante"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <ListView
             android:id="@+id/ls_pass_estudiantes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_pass_listado"
+            android:layout_below="@+id/txt_pass_filtro"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="10dp"
             android:dividerHeight="10dp"></ListView>

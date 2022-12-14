@@ -19,7 +19,7 @@ public class ApiConstants {
         public static String getStatus(int statusId){
             switch(statusId){
                 case EAttendeeStatus.presentId:
-                    return "Prensente";
+                    return "Presente";
                 case EAttendeeStatus.lateId:
                     return "Tardanza";
                 case EAttendeeStatus.absentId:

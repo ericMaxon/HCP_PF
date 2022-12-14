@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.example.pf_hpa4.services.GroupService;
 import com.example.pf_hpa4.services.dto.responses.auth.User;
 import com.example.pf_hpa4.services.dto.responses.student.Group;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +76,40 @@ public class GroupListActivity extends AppCompatActivity {
                             return;
                         }
                         LoadListView_Grupos(groupList);
+
+                        EditText busqueda_g = findViewById(R.id.edt_group_filtro);
+                        busqueda_g.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                List<Group> groupList2 = new ArrayList<Group>();
+
+                                for (int x = 0; x < groupList.size(); x++) {
+                                    String check = (groupList.get(x).getSubject() + " " + groupList.get(x).getGroupName() +
+                                            " " + groupList.get(x).getGroupId()).toLowerCase();
+                                    if (check.contains(busqueda_g.getText().toString().toLowerCase())) {
+                                        groupList2.add(new Group(groupList.get(x).getGroupId(),
+                                                groupList.get(x).getGroupName(),
+                                                groupList.get(x).getSubject(),
+                                                groupList.get(x).getSubjectCode(),
+                                                groupList.get(x).getSemester(),
+                                                groupList.get(x).getTeacherId()));
+                                    }
+                                }
+                                ListViewAdapter_Group adapter = new ListViewAdapter_Group(GroupListActivity.this, groupList2);
+                                Listado_Grupos.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
                     }
 
                     @Override

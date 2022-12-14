@@ -111,12 +111,26 @@
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/rl_asistencia_contadores">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_asistencia_filtro"
+            style="@style/parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp">
+            <EditText
+                android:id="@+id/edt_asistencia_filtro"
+                style="@style/modifiedEditText"
+                android:inputType="text"
+                android:maxLines="1"
+                android:hint="Buscar registro"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <ListView
             android:id="@+id/asistencia_lvGrupos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
+            android:layout_below="@+id/txt_asistencia_filtro"
             android:dividerHeight="10dp"></ListView>
 
     </RelativeLayout>

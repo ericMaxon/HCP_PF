@@ -156,8 +156,10 @@ public class AdminActivity extends AppCompatActivity {
                 List<Student> studentList2 = new ArrayList<Student>();
 
                 for (int x = 0; x < studentList.size(); x++) {
-                    String check = (studentList.get(x).getPersonalDocument());
-                    if (check.contains(busqueda.getText().toString())) {
+                    String check = (studentList.get(x).getPersonalDocument() + " " +
+                            studentList.get(x).getName() + " " +
+                            studentList.get(x).getLastName()).toLowerCase();
+                    if (check.contains(busqueda.getText().toString().toLowerCase())) {
                         studentList2.add(new Student(studentList.get(x).getStudentId(),
                                 studentList.get(x).getName(),
                                 studentList.get(x).getLastName(),
@@ -291,8 +293,9 @@ public class AdminActivity extends AppCompatActivity {
                                                 List<Group> groupList2 = new ArrayList<Group>();
 
                                                 for (int x = 0; x < groupList.size(); x++) {
-                                                    String check = (groupList.get(x).getSubject());
-                                                    if (check.contains(busqueda_g.getText().toString())) {
+                                                    String check = (groupList.get(x).getSubject() + " " + groupList.get(x).getGroupName() +
+                                                            " " + groupList.get(x).getGroupId()).toLowerCase();
+                                                    if (check.contains(busqueda_g.getText().toString().toLowerCase())) {
                                                         groupList2.add(new Group(groupList.get(x).getGroupId(),
                                                                 groupList.get(x).getGroupName(),
                                                                 groupList.get(x).getSubject(),

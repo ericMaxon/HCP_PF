@@ -7,15 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Attendance;
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.LoginActivity;
 import com.example.pf_hpa4.R;
+import com.example.pf_hpa4.constants.ApiConstants;
 import com.example.pf_hpa4.constants.SPreferencesKeys;
 import com.example.pf_hpa4.services.StudentService;
 import com.example.pf_hpa4.services.dto.responses.auth.User;
@@ -94,6 +99,41 @@ public class AttendanceListActivity extends AppCompatActivity {
                         Asistencias.setText("Asistencias\n" + as);
                         Tardanzas.setText("Tardanzas\n" + tar);
                         Ausencias.setText("Ausencias\n" + aus);
+
+                        EditText busqueda_g = findViewById(R.id.edt_asistencia_filtro);
+                        busqueda_g.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                List<Attendance> attendanceList2 = new ArrayList<Attendance>();
+
+                                for (int x = 0; x < attendanceList.size(); x++) {
+                                    String check = (attendanceList.get(x).getDate() + " " +
+                                            attendanceList.get(x).getHour() + " " +
+                                            ApiConstants.AttendeeStatus.getStatus(attendanceList.get(x).getSubjectStatusId())).toLowerCase();
+                                    if (check.contains(busqueda_g.getText().toString().toLowerCase())) {
+                                        attendanceList2.add(new Attendance(attendanceList.get(x).getAttendanceId(),
+                                                attendanceList.get(x).getDate(),
+                                                attendanceList.get(x).getHour(),
+                                                attendanceList.get(x).getStudentId(),
+                                                attendanceList.get(x).getGroupSubjectId(),
+                                                attendanceList.get(x).getSubjectStatusId()));
+                                    }
+                                }
+                                ListViewAdapter_Attendance adapter = new ListViewAdapter_Attendance(AttendanceListActivity.this, attendanceList2);
+                                Listado_Asistencias.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
 
                     }
 

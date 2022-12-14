@@ -9,14 +9,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pf_hpa4.Adapters.ListViewAdapter_PassList;
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.NFC.NFCManager;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.constants.ApiConstants;
@@ -30,6 +34,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -111,6 +116,41 @@ public class PassListActivity extends AppCompatActivity {
                         }
                         LoadListView_Students(studentList);
                         studentList_temp = studentList;
+
+                        EditText busqueda_g = findViewById(R.id.edt_pass_filtro);
+                        busqueda_g.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                List<Student> studentList2 = new ArrayList<Student>();
+
+                                for (int x = 0; x < studentList.size(); x++) {
+                                    String check = (studentList.get(x).getPersonalDocument() + " " +
+                                            studentList.get(x).getName() + " " +
+                                            studentList.get(x).getLastName()).toLowerCase();
+                                    if (check.contains(busqueda_g.getText().toString().toLowerCase())) {
+                                        studentList2.add(new Student(studentList.get(x).getStudentId(),
+                                                studentList.get(x).getName(),
+                                                studentList.get(x).getLastName(),
+                                                studentList.get(x).getPersonalDocument(),
+                                                studentList.get(x).getEmail(),
+                                                studentList.get(x).getPhoto()));
+                                    }
+                                }
+                                ListViewAdapter_Students adapter = new ListViewAdapter_Students(PassListActivity.this, studentList2);
+                                Listado_Estudiantes.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
                     }
 
                     @Override

@@ -5,21 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.pf_hpa4.Adapters.ListViewAdapter_Group;
 import com.example.pf_hpa4.Adapters.ListViewAdapter_Students;
 import com.example.pf_hpa4.R;
 import com.example.pf_hpa4.services.StudentService;
 import com.example.pf_hpa4.services.dto.responses.student.Group;
 import com.example.pf_hpa4.services.dto.responses.student.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -68,6 +73,41 @@ public class StudentListActivity extends AppCompatActivity {
                             return;
                         }
                         LoadListView_Students(studentList);
+
+                        EditText busqueda_g = findViewById(R.id.edt_estudiante_filtro);
+                        busqueda_g.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                List<Student> studentList2 = new ArrayList<Student>();
+
+                                for (int x = 0; x < studentList.size(); x++) {
+                                    String check = (studentList.get(x).getPersonalDocument() + " " +
+                                            studentList.get(x).getName() + " " +
+                                            studentList.get(x).getLastName()).toLowerCase();
+                                    if (check.contains(busqueda_g.getText().toString().toLowerCase())) {
+                                        studentList2.add(new Student(studentList.get(x).getStudentId(),
+                                                studentList.get(x).getName(),
+                                                studentList.get(x).getLastName(),
+                                                studentList.get(x).getPersonalDocument(),
+                                                studentList.get(x).getEmail(),
+                                                studentList.get(x).getPhoto()));
+                                    }
+                                }
+                                ListViewAdapter_Students adapter = new ListViewAdapter_Students(StudentListActivity.this, studentList2);
+                                Listado_Estudiantes.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable editable) {
+
+                            }
+                        });
                     }
 
                     @Override
