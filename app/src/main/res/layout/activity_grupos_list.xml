@@ -25,12 +25,14 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:text="Listado de grupos"
+            android:textColor="#D7DBDD"
             android:textSize="25dp"></TextView>
 
         <TextView
             android:id="@+id/txt_group_subtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#D7DBDD"
             android:layout_below="@+id/txt_group_titulo"
             android:layout_marginHorizontal="15dp"
             android:text="En esta zona podras ver tus grupos"

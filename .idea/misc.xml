@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/black_circular_bk.xml" value="0.252" />
+        <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/blue_circular_bk.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/green_circular_bk.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/listview_content_bk.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/login_button_bk.xml" value="0.252" />
@@ -12,7 +13,10 @@
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/drawable-v24/yelow_circular_bk.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_admin.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_asistencias_list.xml" value="0.3625" />
+        <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_estudiantes_list.xml" value="0.3625" />
+        <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_grupos_list.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_login.xml" value="0.3625" />
+        <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_nfc_actitvity.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/activity_pass_list.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/layout_listview_content.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/layout_listview_content2.xml" value="0.3625" />
@@ -20,6 +24,7 @@
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/layout_matricular.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/layout_perfil_usuario.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/layout_register.xml" value="0.3625" />
+        <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo v4/app/src/main/res/layout/write_nfc_dialog_view.xml" value="0.3625" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo/app/src/main/res/drawable-v24/buttonshapewhitebg.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.252" />
         <entry key="..\:/Users/ACER/Downloads/Proyecto Final HPA 4/Codigo/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.129" />
