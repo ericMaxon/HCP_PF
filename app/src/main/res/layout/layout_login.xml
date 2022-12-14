@@ -31,6 +31,7 @@
                 android:id="@+id/login_user"
                 style="@style/modifiedEditText"
                 android:inputType="textEmailAddress"
+                android:textColor="#D7DBDD"
                 android:maxLines="1"
                 android:hint="@string/login_email_hint"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,6 +42,7 @@
             android:layout_marginTop="@dimen/loginViewsMargin">
             <EditText
                 android:id="@+id/login_pass"
+                android:textColor="#D7DBDD"
                 style="@style/modifiedEditText"
                 android:hint="@string/login_password_hint"
                 android:maxLines="1"

@@ -3,12 +3,15 @@ package com.example.pf_hpa4.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,9 @@ import retrofit2.Response;
 public class PassListActivity extends AppCompatActivity {
 
     NFCManager nfcManager;
+    NfcAdapter nfcAdapter;
+    PendingIntent pendingIntent;
+
     ListView Listado_Estudiantes;
 
     Group selectedGroup = new Group();
@@ -59,7 +65,25 @@ public class PassListActivity extends AppCompatActivity {
         }
         InitControllers();
 
-        progressDialog.setMessage("Obteniendo el listado de estudiantes...");
+        nfcAdapter = NfcAdapter.getDefaultAdapter(PassListActivity.this);
+
+        try {
+            pendingIntent = PendingIntent.getActivity(PassListActivity.this, 0,
+                    new Intent(PassListActivity.this, PassListActivity.this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        }catch (Exception e){
+            AlertDialog.Builder notNFC = new AlertDialog.Builder(PassListActivity.this);
+            notNFC.setTitle("Su dispositivo no cuenta con NFC");
+            notNFC.setMessage("Use el sistema manual para registrar la asistencia");
+            notNFC.show();
+
+            TextView sub = (TextView) findViewById(R.id.txt_pass_tagTitulo);
+            sub.setText("No cuenta con NFC para registrar la asistencia por Tag NFC");
+
+            ImageView img = findViewById(R.id.img_pass_nfc);
+            img.setImageResource(R.drawable.user_dp);
+        }
+
+        progressDialog.setTitle("Obteniendo el listado de estudiantes...");
         progressDialog.show();
 
         nfcManager = new NFCManager(this);
@@ -178,7 +202,7 @@ public class PassListActivity extends AppCompatActivity {
 
     }
     private void cargar_asistencia(Integer idUser, String name, String ced){
-        progressDialog.setMessage("Marcando asistencia...");
+        progressDialog.setTitle("Marcando asistencia...");
         progressDialog.show();
 
         Date currentDate = new Date();

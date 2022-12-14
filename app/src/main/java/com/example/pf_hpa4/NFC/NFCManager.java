@@ -1,6 +1,7 @@
 package com.example.pf_hpa4.NFC;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.nfc.TagLostException;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Parcelable;
+
+import com.example.pf_hpa4.Activities.PassListActivity;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -96,9 +99,13 @@ public class NFCManager {
 	 */
 	public boolean onActivityCreate() {
 		nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
-		pendingIntent = PendingIntent.getActivity(activity, 0,
-				new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-		return nfcAdapter!=null;
+		try {
+			pendingIntent = PendingIntent.getActivity(activity, 0,
+					new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+			return nfcAdapter!=null;
+		}catch (Exception e){
+			return false;
+		}
 	}
 
 	/**
